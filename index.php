@@ -8,7 +8,7 @@
     <link href="./public/css/output.css" rel="stylesheet">
 </head>
 
-<body class="flex flex-col min-h-screen font-sans">
+<body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
     <!-- dit is de navbar -->
     <header class="border-b border-gray-300 px-8 py-4 flex items-center justify-between">
         <nav class="text-sm text-gray-700">Text</nav>
@@ -44,7 +44,7 @@
                         <img src="./images/swirl-bag.jpg" alt="Swirl bag" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-2 pb-3 bg-gradient-to-t from-black/50 to-transparent pt-4">
                             <p class="text-xs text-white">Text</p>
-                            <button class="bg-gray-700 text-white text-xs px-4 py-1 rounded hover:bg-gray-900">Button</button>
+                            <button class="bg-gray-700 text-white text-xs px-4 py-1 rounded hover:bg-gray-900">SHOW MORE</button>
                         </div>
                     </div>
                 </div>
