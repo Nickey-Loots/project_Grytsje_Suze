@@ -12,7 +12,9 @@
     <!-- dit is de navbar -->
     <header class="border-b border-gray-300 px-8 py-4 flex items-center justify-between">
         <nav class="text-sm text-gray-700">Text</nav>
-        <div class="text-2xl font-bold tracking-widest uppercase text-gray-800">Groot Logo</div>
+        <div class="flex items-center justify-center">
+            <img src="./images/GS Grytsje Suze Logo goed-01.png" alt="GS Grytsje Suze Logo" class="h-16 w-auto">
+        </div>
         <nav class="text-sm text-gray-700">Text</nav>
     </header>
     <!-- de mainain -->
@@ -42,9 +44,9 @@
                     </div>
                     <div class="flex-1 rounded overflow-hidden relative">
                         <img src="./images/swirl-bag.jpg" alt="Swirl bag" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 flex flex-col items-center gap-2 pb-3 bg-gradient-to-t from-black/50 to-transparent pt-4">
+                        <div class="absolute inset-0 flex flex-col justify-center items-center gap-4 bg-gradient-to-t from-black/50 to-transparent">
                             <p class="text-xs text-white">Text</p>
-                            <button class="bg-gray-700 text-white text-xs px-4 py-1 rounded hover:bg-gray-900">SHOW MORE</button>
+                            <button class="text-white text-lg px-8 py-4 rounded-lg transition-all duration-200 shadow-lg" style="background-color: #ff40b4; opacity: 0.85;">SHOW MORE</button>
                         </div>
                     </div>
                 </div>
