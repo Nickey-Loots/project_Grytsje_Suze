@@ -12,16 +12,22 @@
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
     <!-- dit is de navbar -->
     <header class="px-8 py-4 flex items-center justify-between">
-        <nav class="text-sm text-gray-700 flex-1 flex justify-end pr-100" style="font-family: 'Bebas Neue', sans-serif;">Text</nav>
+        <nav class="text-gray-700 flex-1 flex justify-end pr-100 text-5xl" style="font-family: 'Bebas Neue', sans-serif;">Portfolio</nav>
         <div class="flex-shrink-0 flex items-center justify-center">
             <img src="./images/GS Grytsje Suze Logo goed-01.png" alt="GS Grytsje Suze Logo" class="h-28 w-auto">
         </div>
-        <nav class="text-sm text-gray-700 flex-1 flex justify-start pl-100" style="font-family: 'Bebas Neue', sans-serif;">Text</nav>
+        <nav class="text-gray-700 flex-1 flex justify-start pl-100 text-5xl" style="font-family: 'Bebas Neue', sans-serif;">Contact Me</nav>
     </header>
     <!-- de mainain -->
     <main class="flex-1 px-8 py-8">
         <!-- Intro text -->
-        <p class="text-sm text-gray-600 mb-6">Text</p>
+        <div class="mb-6 flex justify-start items-center max-w-7xl mx-auto">
+            <div class="flex items-center px-6 pt-6 pb-3" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; gap: 16px;">
+                <span class="text-white" style="font-size: 4.5rem; line-height: 1;">TAKE A</span>
+                <img src="./images/oogtas.png" alt="Oogtas" style="height: 4.5rem; width: auto; display: inline-block; position: relative; top: -10px;">
+                <span class="text-white" style="font-size: 4.5rem; line-height: 1; margin-left: -8px;">IN MY WORLD</span>
+            </div>
+        </div>
         <!-- Image grid -->
         <div class="grid grid-cols-2 gap-2 max-w-7xl mx-auto mb-8" style="height: 800px;">
 
