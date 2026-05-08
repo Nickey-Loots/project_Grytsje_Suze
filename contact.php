@@ -58,10 +58,10 @@
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-solid fa-envelope"></i> Email</p>
                     <p class="text-white">GrytsjeSuze@hotmail.com</p>
                 </div>
-                <div>
+                <a href="https://www.instagram.com/grytsjesuze/" target="_blank" class="block hover:opacity-80 transition-opacity">
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-instagram"></i> Instagram</p>
-                    <p class="text-white">@grytsjesuze</p>
-                </div>
+                    <p class="text-white hover:underline">@grytsjesuze</p>
+                </a>
                 <div>
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-facebook"></i> Facebook</p>
                     <p class="text-white">@grytsjesuze</p>
