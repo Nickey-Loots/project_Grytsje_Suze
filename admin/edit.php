@@ -1,33 +1,29 @@
 <?php
-
 include 'auth.php';
 
-// 1. Database verbinding
+// Database verbinding
 $host = 'localhost';
 $db = 'grytsje suze';
 $user = 'bit_academy';
 $pass = 'bit_academy';
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
 } catch (\PDOException $e) {
     die("Database verbinding mislukt: " . $e->getMessage());
 }
 
-// 2. Haal de huidige gegevens van de tas op
-if (!isset($_GET['id'])) {
+// 1. Haal de gegevens op
+$id = $_GET['id'] ?? null;
+if (!$id) {
     header("Location: index.php");
     exit;
 }
 
-$id = $_GET['id'];
 $stmt = $pdo->prepare("SELECT * FROM tassen WHERE id = :id");
 $stmt->execute([':id' => $id]);
 $tas = $stmt->fetch();
@@ -36,22 +32,17 @@ if (!$tas) {
     die("Tas niet gevonden.");
 }
 
-// 3. Verwerk het formulier als er gepost wordt
+// 2. Verwerk de update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $naam = $_POST['naam'];
     $beschrijving = $_POST['beschrijving'];
-    $afbeeldingPad = $tas['afbeelding']; // Standaard behouden we de oude afbeelding
+    $kleurcode = $_POST['kleurcode'];
+    $afbeeldingPad = $tas['afbeelding'];
 
-    // Check of er een nieuwe afbeelding is geüpload
-    if (isset($_FILES['afbeelding']) && $_FILES['afbeelding']['error'] === UPLOAD_ERR_OK) {
-        $bestandsnaam = $_FILES['afbeelding']['name'];
-        $tijdelijke_locatie = $_FILES['afbeelding']['tmp_name'];
-        $doel_map = "../uploads/";
-        $unieke_naam = time() . '_' . basename($bestandsnaam);
-        $volledige_pad = $doel_map . $unieke_naam;
-
-        if (move_uploaded_file($tijdelijke_locatie, $volledige_pad)) {
-            // Verwijder de oude afbeelding van de server als die bestaat
+    if (isset($_FILES['afbeelding']) && $_FILES['afbeelding']['error'] === 0) {
+        $unieke_naam = time() . '_' . basename($_FILES['afbeelding']['name']);
+        $doel = "../uploads/" . $unieke_naam;
+        if (move_uploaded_file($_FILES['afbeelding']['tmp_name'], $doel)) {
             if (file_exists("../" . $tas['afbeelding'])) {
                 unlink("../" . $tas['afbeelding']);
             }
@@ -59,21 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Update de database
-    $updateSql = "UPDATE tassen SET naam = :naam, beschrijving = :beschrijving, afbeelding = :afbeelding WHERE id = :id";
-    $updateStmt = $pdo->prepare($updateSql);
-    $updateStmt->execute([
-        ':naam' => $naam,
-        ':beschrijving' => $beschrijving,
-        ':afbeelding' => $afbeeldingPad,
-        ':id' => $id
-    ]);
+    $sql = "UPDATE tassen SET naam = :n, beschrijving = :b, afbeelding = :a, kleurcode = :k WHERE id = :id";
+    $pdo->prepare($sql)->execute([':n' => $naam, ':b' => $beschrijving, ':a' => $afbeeldingPad, ':k' => $kleurcode, ':id' => $id]);
 
     header("Location: index.php");
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -81,129 +64,149 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tas Bewerken</title>
-    <link rel="stylesheet" href="../public/css/output.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 font-sans pb-20">
 
-    <nav class="bg-gray-900 border-b border-gray-800 shadow-lg">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex items-center gap-2">
-                <div class="bg-blue-600 p-1.5 rounded-lg">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                    </svg>
-                </div>
-                <span class="text-white text-lg font-bold tracking-wider uppercase">Admin<span class="text-blue-500">Panel</span></span>
-            </div>
+    <nav class="bg-gray-900 h-16 flex items-center shadow-lg px-6 mb-10">
+        <span class="text-white font-bold uppercase tracking-widest">Admin<span
+                class="text-blue-500">Panel</span></span>
+    </nav>
 
-            <div class="flex items-center space-x-4">
-                <a href="index.php" class="text-gray-300 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-md text-sm font-medium transition duration-200 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                    </svg>
-                    Tassen
-                </a>
-                
-                <a href="gebruikers.php" class="text-gray-300 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-md text-sm font-medium transition duration-200 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    Admins
-                </a>
+    <div class="container mx-auto px-4 max-w-5xl">
+        <div class="bg-white shadow-xl rounded-2xl p-8">
+            <h2 class="text-2xl font-black text-gray-800 mb-8 border-b pb-4">Product Aanpassen</h2>
 
-                <div class="h-6 w-px bg-gray-700 mx-2"></div>
+            <form action="" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-10">
 
-                <a href="logout.php" class="text-red-400 hover:text-red-300 hover:bg-red-900/20 px-3 py-2 rounded-md text-sm font-medium transition duration-200">
-                    Uitloggen
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-    <div class="container mx-auto mt-10 px-4 max-w-2xl">
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Tas Aanpassen</h2>
-
-            <form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Naam</label>
-                    <input type="text" name="naam" value="<?= htmlspecialchars($tas['naam']) ?>" required
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Beschrijving</label>
-                    <textarea name="beschrijving" rows="4" required
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500"><?= htmlspecialchars($tas['beschrijving']) ?></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Huidige Afbeelding</label>
+                <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700">Afbeelding</label>
-
-                        <div class="mt-2 flex items-center gap-6">
-                            <!-- De afbeelding container -->
-                            <div class="relative">
-                                <img id="preview-img" src="../<?= htmlspecialchars($tas['afbeelding']) ?>"
-                                    class="h-32 w-32 object-cover rounded-lg border-2 border-gray-300 shadow-sm">
-                                <span id="preview-label"
-                                    class="absolute -top-2 -left-2 bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full uppercase font-bold">
-                                    Huidig
-                                </span>
-                            </div>
-                        </div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Naam</label>
+                        <input type="text" name="naam" value="<?= htmlspecialchars($tas['naam']) ?>" required
+                            class="w-full border-2 border-gray-100 rounded-xl p-3 focus:border-blue-500 outline-none transition">
                     </div>
 
-                    <label class="block text-sm font-semibold text-gray-700 mt-4">Nieuwe Afbeelding (optioneel)</label>
-                    <input id="file-input" type="file" name="afbeelding" accept="image/*"
-                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-blue-700">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Beschrijving</label>
+                        <textarea name="beschrijving" rows="6" required
+                            class="w-full border-2 border-gray-100 rounded-xl p-3 focus:border-blue-500 outline-none transition"><?= htmlspecialchars($tas['beschrijving']) ?></textarea>
+                        </div>
+                        <div class="bg-blue-50 p-6 rounded-2xl border-2 border-blue-100">
+                            <label class="block text-xs font-bold text-blue-400 uppercase mb-3">Kleur van de tas</label>
+                            <div class="flex items-center gap-4">
+                                <input type="color" name="kleurcode" id="kleurcode"
+                                    value="<?= htmlspecialchars($tas['kleurcode'] ?? '#ffffff') ?>"
+                                    class="h-12 w-12 cursor-pointer border-none bg-transparent">
+                                <button type="button" id="pipet-btn"
+                                    class="flex-1 bg-white border-2 border-blue-200 hover:border-blue-500 py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition shadow-sm font-bold text-blue-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-3">
+                                        </path>
+                                    </svg>
+                                    Kleur uit foto prikken
+                                </button>
+                            </div>
+                            <p class="mt-3 text-[11px] text-blue-400 font-medium leading-tight">Klik op de knop, beweeg je
+                                muis over de afbeelding rechts en klik op de tas voor de exacte kleur.</p>
+                        </div>
                 </div>
 
-                <div class="flex justify-between items-center pt-6">
-                    <a href="index.php" class="text-gray-600 hover:underline text-sm font-semibold">Terug naar
-                        overzicht</a>
+                <div class="flex flex-col items-center">
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-3 self-start">Productfoto</label>
+                    <div class="relative w-full aspect-square max-w-100]">
+                        <img id="preview-img" src="../<?= htmlspecialchars($tas['afbeelding']) ?>"
+                            class="w-full h-full object-cover rounded-3xl border-8 border-white shadow-2xl transition-all duration-300">
+                    </div>
+                    <div class="mt-6 w-full">
+                        <input type="file" name="afbeelding" id="file-input" accept="image/*"
+                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-gray-800 file:text-white hover:file:bg-black transition cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 flex justify-between items-center pt-8 border-t mt-4">
+                    <a href="index.php"
+                        class="text-gray-400 hover:text-gray-600 font-bold text-sm tracking-widest uppercase transition">Annuleren</a>
                     <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow transition">
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-black py-4 px-12 rounded-2xl shadow-lg transform hover:-translate-y-1 transition-all uppercase tracking-widest">
                         Wijzigingen Opslaan
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
     <script>
-        // Wacht tot de pagina geladen is
         document.addEventListener('DOMContentLoaded', function () {
-            const fileInput = document.getElementById('file-input');
-            const preview = document.getElementById('preview-img');
-            const label = document.getElementById('preview-label');
+            const pipetBtn = document.getElementById('pipet-btn');
+            const kleurInput = document.getElementById('kleurcode');
+            const previewImg = document.getElementById('preview-img');
+            const colorHex = document.getElementById('color-hex');
 
-            // Alleen uitvoeren als het element echt bestaat
-            if (fileInput) {
-                fileInput.addEventListener('change', function (event) {
-                    const file = event.target.files[0];
+            // Functie om de kleurwaarde overal bij te werken
+            function updateColorDisplay(hex) {
+                kleurInput.value = hex;
+                if (colorHex) colorHex.textContent = hex.toUpperCase();
+            }
 
-                    if (file) {
-                        const reader = new FileReader();
-
-                        reader.onload = function (e) {
-                            preview.src = e.target.result;
-
-                            if (label) {
-                                label.textContent = "Nieuw";
-                                label.classList.replace('bg-blue-600', 'bg-green-600');
-                            }
-
-                            preview.classList.replace('border-gray-300', 'border-green-500');
-                        }
-
-                        reader.readAsDataURL(file);
-                    }
+            // 1. De "Magic" Pipet (Chrome/Edge Desktop)
+            if ('EyeDropper' in window) {
+                const eyeDropper = new EyeDropper();
+                pipetBtn.addEventListener('click', () => {
+                    eyeDropper.open().then(result => {
+                        updateColorDisplay(result.sRGBHex);
+                    }).catch(e => { });
                 });
             }
+            // 2. Safari (iPhone) & Firefox Fallback
+            else {
+                pipetBtn.textContent = "Tik op foto voor kleur";
+                pipetBtn.classList.replace('text-blue-600', 'text-orange-600');
+
+                // We luisteren naar zowel 'click' (desktop) als 'touchend' (mobiel)
+                const getColorFromEvent = function (e) {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Gebruik natuurlijke afmetingen van de afbeelding voor nauwkeurigheid
+                    canvas.width = previewImg.naturalWidth;
+                    canvas.height = previewImg.naturalHeight;
+                    ctx.drawImage(previewImg, 0, 0, canvas.width, canvas.height);
+
+                    const rect = previewImg.getBoundingClientRect();
+
+                    // Ondersteuning voor zowel muisklik als vinger-tap
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                    // Bereken verhouding tussen weergegeven grootte en echte grootte
+                    const x = (clientX - rect.left) * (canvas.width / rect.width);
+                    const y = (clientY - rect.top) * (canvas.height / rect.height);
+
+                    const pixel = ctx.getImageData(x, y, 1, 1).data;
+                    const hex = "#" + ((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2]).toString(16).slice(1);
+
+                    updateColorDisplay(hex);
+                };
+
+                previewImg.addEventListener('click', getColorFromEvent);
+                // Voeg touch ondersteuning toe voor iPhone
+                previewImg.addEventListener('touchstart', function (e) {
+                    // Voorkom dat de pagina scrollt terwijl je tikt voor een kleur
+                    getColorFromEvent(e);
+                }, { passive: true });
+            }
+
+            // De standaard Image Preview voor de file-input
+            document.getElementById('file-input').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => { previewImg.src = event.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            });
         });
     </script>
 </body>
