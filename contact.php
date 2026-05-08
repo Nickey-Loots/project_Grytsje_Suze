@@ -14,7 +14,7 @@
     <header class="px-4 md:px-8 py-4 flex items-center justify-between" style="background-color: #000;">
         <nav class="text-white flex-1 flex justify-end text-xl md:text-4xl md:pr-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
         <div class="flex-shrink-0 flex items-center justify-center px-3 md:px-8">
-            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-16 md:h-28 w-auto"></a>
+            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-40 w-auto"></a>
         </div>
         <nav class="text-white flex-1 flex justify-start text-xl md:text-4xl md:pl-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
     </header>
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Contact section -->
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:items-center">
 
             <!-- Contact form -->
             <div class="p-6 md:p-8" style="background-color: #000;">
@@ -62,10 +62,7 @@
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-instagram"></i> Instagram</p>
                     <p class="text-white hover:underline">@grytsjesuze</p>
                 </a>
-                <div>
-                    <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-facebook"></i> Facebook</p>
-                    <p class="text-white">@grytsjesuze</p>
-                </div>
+                <!-- Facebook removed -->
                 <div>
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-solid fa-location-dot"></i> Location</p>
                     <p class="text-white">The Netherlands</p>
