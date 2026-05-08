@@ -1,4 +1,7 @@
 <?php
+
+include 'auth.php';
+
 // Database instellingen
 $host = 'localhost';
 $db = 'grytsje suze';
