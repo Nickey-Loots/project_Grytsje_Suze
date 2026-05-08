@@ -34,11 +34,42 @@ $tassen = $stmt->fetchAll();
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
     <!-- Navigatie -->
-    <nav class="bg-gray-800 p-4 shadow-md">
-        <div class="container mx-auto">
-            <span class="text-white text-xl font-semibold">Admin Panel</span>
+   <nav class="bg-gray-900 border-b border-gray-800 shadow-lg">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-600 p-1.5 rounded-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                </div>
+                <span class="text-white text-lg font-bold tracking-wider uppercase">Admin<span class="text-blue-500">Panel</span></span>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="index.php" class="text-gray-300 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-md text-sm font-medium transition duration-200 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Tassen
+                </a>
+
+                <a href="gebruikers.php" class="text-gray-300 hover:text-white hover:bg-gray-800 px-3 py-2 rounded-md text-sm font-medium transition duration-200 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    Admins
+                </a>
+
+                <div class="h-6 w-px bg-gray-700 mx-2"></div>
+
+                <a href="logout.php" class="text-red-400 hover:text-red-300 hover:bg-red-900/20 px-3 py-2 rounded-md text-sm font-medium transition duration-200">
+                    Uitloggen
+                </a>
+            </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Hoofdcontainer -->
     <div class="container mx-auto mt-6 md:mt-10 px-4 max-w-6xl">
