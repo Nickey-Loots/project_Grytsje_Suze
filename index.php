@@ -12,11 +12,11 @@
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
     <!-- dit is de navbar -->
     <header class="px-8 py-4 flex items-center justify-between">
-        <nav class="text-gray-700 flex-1 flex justify-end pr-100 text-5xl" style="font-family: 'Bebas Neue', sans-serif;">Portfolio</nav>
+        <nav class="text-gray-700 flex-1 flex justify-end pr-100 text-5xl" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php">Portfolio</a></nav>
         <div class="flex-shrink-0 flex items-center justify-center">
-            <img src="./images/GS Grytsje Suze Logo goed-01.png" alt="GS Grytsje Suze Logo" class="h-28 w-auto">
+            <a href="index.php"><img src="./images/GS Grytsje Suze Logo goed-01.png" alt="GS Grytsje Suze Logo" class="h-28 w-auto"></a>
         </div>
-        <nav class="text-gray-700 flex-1 flex justify-start pl-100 text-5xl" style="font-family: 'Bebas Neue', sans-serif;">Contact Me</nav>
+        <nav class="text-gray-700 flex-1 flex justify-start pl-100 text-5xl" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php">Contact Me</a></nav>
     </header>
     <!-- de mainain -->
     <main class="flex-1 px-8 py-8">
