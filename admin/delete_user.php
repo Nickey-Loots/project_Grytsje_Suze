@@ -1,4 +1,7 @@
 <?php
+
+include 'auth.php';
+
 // Database verbinding (pas je gegevens aan)
 $host = 'localhost';
 $db = 'grytsje suze';
