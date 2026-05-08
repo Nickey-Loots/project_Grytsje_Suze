@@ -30,7 +30,7 @@
         </div>
 
         <!-- Contact section -->
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:items-center">
 
             <!-- Contact form -->
             <div class="p-6 md:p-8" style="background-color: #000;">
@@ -62,10 +62,7 @@
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-instagram"></i> Instagram</p>
                     <p class="text-white hover:underline">@grytsjesuze</p>
                 </a>
-                <div>
-                    <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-facebook"></i> Facebook</p>
-                    <p class="text-white">@grytsjesuze</p>
-                </div>
+                <!-- Facebook removed -->
                 <div>
                     <p class="text-3xl md:text-5xl mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-solid fa-location-dot"></i> Location</p>
                     <p class="text-white">The Netherlands</p>
