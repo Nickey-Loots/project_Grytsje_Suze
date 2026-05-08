@@ -12,11 +12,11 @@
 
     <!-- Navbar -->
     <header class="px-4 md:px-8 py-4 flex items-center justify-between" style="background-color: #000;">
-        <nav class="text-white flex-1 flex justify-end text-2xl md:text-5xl md:pr-24" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
+        <nav class="text-white flex-1 flex justify-end text-xl md:text-4xl md:pr-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
         <div class="flex-shrink-0 flex items-center justify-center px-3 md:px-8">
             <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-16 md:h-28 w-auto"></a>
         </div>
-        <nav class="text-white flex-1 flex justify-start text-2xl md:text-5xl md:pl-24" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
+        <nav class="text-white flex-1 flex justify-start text-xl md:text-4xl md:pl-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
     </header>
 
     <!-- Main -->
