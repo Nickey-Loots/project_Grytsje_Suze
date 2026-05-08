@@ -7,25 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
 </head>
-<body style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
-    <!-- Mobile Sidebar Nav (only on mobile) -->
-    <div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
-        <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
-        <a href="index.php">
-            <img src="./images/Groot logo wit.png" alt="Logo" class="h-auto" style="width: 180px; transform: rotate(-90deg);">
-        </a>
-        <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Contact Me</a>
-    </div>
-    <!-- Page wrapper: offset on mobile for sidebar -->
-    <div class="flex flex-col min-h-screen pl-20 md:pl-0">
-        <!-- Desktop Navbar -->
-        <header class="hidden md:flex px-8 py-4 items-center justify-between" style="background-color: #000;">
-            <nav class="text-white flex-1 flex justify-end text-4xl pr-24 mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
-            <div class="flex-shrink-0 flex items-center justify-center px-8">
-                <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-48 w-auto"></a>
-            </div>
-            <nav class="text-white flex-1 flex justify-start text-4xl pl-24 mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
-        </header>
+<body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
+    <!-- Navbar -->
+    <header class="px-4 md:px-8 py-4 flex items-center justify-between" style="background-color: #000;">
+        <nav class="text-white flex-1 flex justify-end text-xl md:text-4xl md:pr-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
+        <div class="flex-shrink-0 flex items-center justify-center px-3 md:px-8">
+            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-40 w-auto"></a>
+        </div>
+        <nav class="text-white flex-1 flex justify-start text-xl md:text-4xl md:pl-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
+    </header>
         <!-- Portfolio Items -->
         <main class="flex-1 border-t-4 border-black relative">
             <!-- Center line -->
@@ -105,6 +95,5 @@
                 <a href="#" class="hover:underline">Text</a>
             </nav>
         </footer>
-    </div>
 </body>
 </html>
