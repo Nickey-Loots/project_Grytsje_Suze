@@ -9,20 +9,20 @@
 </head>
 <body style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
     <!-- Mobile Sidebar Nav (only on mobile) -->
-    <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+    <div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
         <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
         <a href="index.php">
-            <img src="./images/groot logo wit.png" alt="Logo" class="w-8 h-auto">
+            <img src="./images/Groot logo wit.png" alt="Logo" class="h-auto" style="width: 180px; transform: rotate(-90deg);">
         </a>
-        <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; letter-spacing: 0.12em;">Contact Me</a>
+        <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Contact Me</a>
     </div>
     <!-- Page wrapper: offset on mobile for sidebar -->
-    <div class="flex flex-col min-h-screen pl-12 md:pl-0">
+    <div class="flex flex-col min-h-screen pl-20 md:pl-0">
         <!-- Desktop Navbar -->
         <header class="hidden md:flex px-8 py-4 items-center justify-between" style="background-color: #000;">
             <nav class="text-white flex-1 flex justify-end text-4xl pr-24 mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
             <div class="flex-shrink-0 flex items-center justify-center px-8">
-                <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-28 w-auto"></a>
+                <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-48 w-auto"></a>
             </div>
             <nav class="text-white flex-1 flex justify-start text-4xl pl-24 mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
         </header>
