@@ -1,5 +1,5 @@
 <?php
-// Database instellingen (dezelfde als in upload.php)
+// 1. Database verbinding
 $host = 'localhost';
 $db = 'grytsje suze';
 $user = 'bit_academy';
@@ -19,24 +19,21 @@ try {
     die("Database verbinding mislukt: " . $e->getMessage());
 }
 
-// Haal alle tassen op uit de database, nieuwste eerst
-$sql = "SELECT * FROM tassen ORDER BY created_at DESC";
-$stmt = $pdo->query($sql);
+// 2. Haal alle tassen op
+$stmt = $pdo->query("SELECT * FROM tassen ORDER BY created_at DESC");
 $tassen = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Tassen</title>
-    <link href="../public/css/output.css" rel="stylesheet">
+    <title>Admin Panel - Tassen Beheer</title>
+    <link rel="stylesheet" href="../public/css/output.css">
 </head>
-
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-    <!-- Navigatie / Header -->
+    <!-- Navigatie -->
     <nav class="bg-gray-800 p-4 shadow-md">
         <div class="container mx-auto">
             <span class="text-white text-xl font-semibold">Admin Panel</span>
@@ -46,16 +43,11 @@ $tassen = $stmt->fetchAll();
     <!-- Hoofdcontainer -->
     <div class="container mx-auto mt-6 md:mt-10 px-4 max-w-6xl">
 
-        <!-- Paginakop en Toevoeg Knop -->
+        <!-- Header & Toevoeg Knop -->
         <div class="flex flex-row justify-between items-center mb-6 gap-4">
             <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Tassen Beheer</h1>
-            <!-- Pas de href aan naar jouw formulier pagina -->
-            <a href="addproduct.php"
-                class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-3 sm:px-4 rounded shadow-sm transition duration-150 ease-in-out flex items-center text-sm sm:text-base whitespace-nowrap">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
+            <a href="toevoegen.php" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-3 sm:px-4 rounded shadow-sm transition flex items-center text-sm sm:text-base whitespace-nowrap">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 <span class="hidden sm:inline">Nieuwe Tas Toevoegen</span>
                 <span class="sm:hidden">Toevoegen</span>
             </a>
@@ -66,15 +58,12 @@ $tassen = $stmt->fetchAll();
             <div class="overflow-x-auto">
                 <table class="min-w-full leading-normal">
                     <thead>
-                        <!-- Desktop Headers -->
-                        <tr
-                            class="bg-gray-50 text-gray-600 text-left text-sm uppercase tracking-wider hidden sm:table-row">
+                        <tr class="bg-gray-50 text-gray-600 text-left text-sm uppercase tracking-wider hidden sm:table-row">
                             <th class="px-6 py-3 border-b-2 border-gray-200 font-semibold">Afbeelding</th>
                             <th class="px-6 py-3 border-b-2 border-gray-200 font-semibold">Naam</th>
                             <th class="px-6 py-3 border-b-2 border-gray-200 font-semibold">Beschrijving</th>
                             <th class="px-6 py-3 border-b-2 border-gray-200 font-semibold text-center">Acties</th>
                         </tr>
-                        <!-- Mobiele Headers -->
                         <tr class="bg-gray-50 text-gray-600 text-left text-xs uppercase tracking-wider sm:hidden">
                             <th class="px-4 py-3 border-b-2 border-gray-200 font-semibold">Afbeelding</th>
                             <th class="px-4 py-3 border-b-2 border-gray-200 font-semibold">Details & Acties</th>
@@ -84,74 +73,110 @@ $tassen = $stmt->fetchAll();
 
                         <?php if (count($tassen) > 0): ?>
                             <?php foreach ($tassen as $tas): ?>
-                                <tr class="hover:bg-gray-50 border-b border-gray-200 transition duration-150">
-                                    <!-- Afbeelding -->
-                                    <!-- We gebruiken htmlspecialchars() om XSS-aanvallen te voorkomen -->
+                                <tr class="hover:bg-gray-50 border-b border-gray-200 transition">
+                                    <!-- Afbeelding (Pad naar root via ../) -->
                                     <td class="px-4 sm:px-6 py-4 whitespace-nowrap w-20 sm:w-auto align-top sm:align-middle">
-                                        <img class="h-16 w-16 sm:h-12 sm:w-12 rounded object-cover border border-gray-300"
-                                            src="<?= htmlspecialchars($tas['afbeelding']) ?>"
-                                            alt="<?= htmlspecialchars($tas['naam']) ?>">
+                                        <img class="h-16 w-16 sm:h-12 sm:w-12 rounded object-cover border border-gray-300" 
+                                             src="../<?= htmlspecialchars($tas['afbeelding']) ?>" 
+                                             alt="<?= htmlspecialchars($tas['naam']) ?>">
                                     </td>
 
-                                    <!-- Mobiele Details -->
+                                    <!-- Mobiel -->
                                     <td class="sm:hidden px-4 py-4 align-top">
-                                        <div class="font-bold text-gray-900 mb-1 text-base">
-                                            <?= htmlspecialchars($tas['naam']) ?>
-                                        </div>
-                                        <div class="text-sm text-gray-600 mb-3">
-                                            <?= nl2br(htmlspecialchars($tas['beschrijving'])) ?>
-                                        </div>
+                                        <div class="font-bold text-gray-900 mb-1 text-base"><?= htmlspecialchars($tas['naam']) ?></div>
+                                        <div class="text-sm text-gray-600 mb-3"><?= nl2br(htmlspecialchars($tas['beschrijving'])) ?></div>
                                         <div class="flex gap-2">
                                             <a href="edit.php?id=<?= $tas['id'] ?>"
-                                                class="bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-3 rounded text-xs transition duration-150">Bewerk</a>
-                                            <!-- Delete actie met een kleine javascript confirm als extra veiligheid -->
-                                            <a href="delete.php?id=<?= $tas['id'] ?>"
-                                                onclick="return confirm('Weet je zeker dat je deze tas wilt verwijderen?');"
-                                                class="bg-red-500 hover:bg-red-600 text-white py-1.5 px-3 rounded text-xs transition duration-150">Verwijder</a>
+                                                class="bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-3 rounded text-xs">Bewerk</a>
+                                            <button onclick="openDeleteModal(<?= $tas['id'] ?>)"
+                                                class="bg-red-500 hover:bg-red-600 text-white py-1.5 px-3 rounded text-xs">Verwijder</button>
                                         </div>
                                     </td>
 
-                                    <!-- Desktop Details -->
+                                    <!-- Desktop -->
                                     <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                                         <?= htmlspecialchars($tas['naam']) ?>
                                     </td>
                                     <td class="hidden sm:table-cell px-6 py-4 text-sm text-gray-600">
-                                        <!-- nl2br zorgt ervoor dat enters in de textarea ook in de tabel als enters getoond worden -->
                                         <?= nl2br(htmlspecialchars($tas['beschrijving'])) ?>
                                     </td>
                                     <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center gap-3">
                                             <a href="edit.php?id=<?= $tas['id'] ?>"
-                                                class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium transition duration-150">Bewerk</a>
-                                            <a href="delete.php?id=<?= $tas['id'] ?>"
-                                                onclick="return confirm('Weet je zeker dat je deze tas wilt verwijderen?');"
-                                                class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm font-medium transition duration-150">Verwijder</a>
+                                                class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium transition">Bewerk</a>
+                                            <button onclick="openDeleteModal(<?= $tas['id'] ?>)"
+                                                class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm font-medium transition">Verwijder</button>
                                         </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <!-- Melding als de database leeg is -->
                             <tr>
-                                <td colspan="4" class="px-6 py-8 text-center text-gray-500">
-                                    Er zijn nog geen tassen toegevoegd. Klik op "Nieuwe Tas Toevoegen" om te beginnen.
-                                </td>
+                                <td colspan="4" class="px-6 py-8 text-center text-gray-500">Geen tassen gevonden.</td>
                             </tr>
                         <?php endif; ?>
 
                     </tbody>
                 </table>
             </div>
+            <div class="px-4 sm:px-6 py-4 bg-gray-50 border-t border-gray-200">
+                <span class="text-xs sm:text-sm text-gray-600">Totaal: <?= count($tassen) ?> tassen</span>
+            </div>
+            </div>
+            </div>
 
-            <!-- Paginering (Momenteel statisch, kan later dynamisch gemaakt worden indien nodig) -->
-            <div
-                class="px-4 sm:px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <span class="text-xs sm:text-sm text-gray-600 text-center sm:text-left">Totaal: <?= count($tassen) ?>
-                    tassen</span>
+            <!-- CUSTOM DELETE MODAL -->
+            <div id="deleteModal"
+                class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                <div class="relative p-6 border w-96 shadow-xl rounded-lg bg-white">
+                    <div class="text-center">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                            <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900">Verwijderen bevestigen</h3>
+                        <p class="text-sm text-gray-500 mt-2">Weet je zeker dat je deze tas wilt verwijderen? Dit kan niet ongedaan
+                            worden gemaakt.</p>
+
+                <div class="mt-6 flex justify-center gap-3">
+                    <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-semibold rounded-md transition">
+                        Annuleren
+                    </button>
+                    <a id="confirmDeleteBtn" href="#" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-md transition">
+                        Verwijderen
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-</body>
+    <script>
+        function openDeleteModal(id) {
+            const modal = document.getElementById('deleteModal');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            confirmBtn.href = 'delete.php?id=' + id;
+            modal.classList.remove('hidden');
+            // Voorkom scrollen van body als modal open is
+            document.body.style.overflow = 'hidden';
+        }
 
+        function closeDeleteModal() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Sluit modal als je buiten het witte vlak klikt
+        window.onclick = function(event) {
+            const modal = document.getElementById('deleteModal');
+            if (event.target == modal) {
+                closeDeleteModal();
+            }
+        }
+    </script>
+
+</body>
 </html>
