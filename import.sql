@@ -34,3 +34,6 @@ INSERT INTO tassen (naam, afbeelding, beschrijving) VALUES
 ('Zakelijke Laptoptas', 'https://via.placeholder.com/150/666666/FFFFFF/?text=Tas+3', 'Waterafstotende laptoptas met extra vakken voor accessoires en documenten.');
 
 ALTER TABLE tassen ADD COLUMN kleurcode VARCHAR(7) DEFAULT '#ffffff';
+
+INSERT INTO users (email, wachtwoord, rol) VALUES
+('test@example.com', '$2y$10$a9Z3BRQHvx7atUp5QoIGwOdHU4zEQ4XAyn9J.LPsUecTcy4Vlz.3q', 'admin');
