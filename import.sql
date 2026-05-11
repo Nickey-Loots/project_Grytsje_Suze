@@ -32,3 +32,5 @@ INSERT INTO tassen (naam, afbeelding, beschrijving) VALUES
 ('Leren Rugzak', 'https://via.placeholder.com/150/000000/FFFFFF/?text=Tas+1', 'Een stijlvolle en duurzame leren rugzak, perfect voor dagelijks gebruik en werk.'),
 ('Linnen Shopper', 'https://via.placeholder.com/150/333333/FFFFFF/?text=Tas+2', 'Grote, lichte shopper gemaakt van biologisch linnen. Ideaal voor de boodschappen.'),
 ('Zakelijke Laptoptas', 'https://via.placeholder.com/150/666666/FFFFFF/?text=Tas+3', 'Waterafstotende laptoptas met extra vakken voor accessoires en documenten.');
+
+ALTER TABLE tassen ADD COLUMN kleurcode VARCHAR(7) DEFAULT '#ffffff';

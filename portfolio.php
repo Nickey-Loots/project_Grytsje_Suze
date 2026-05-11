@@ -1,21 +1,52 @@
+<?php
+// 1. Database verbinding
+$host = 'localhost';
+$db = 'grytsje suze';
+$user = 'bit_academy';
+$pass = 'bit_academy';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false,
+];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    die("Database verbinding mislukt: " . $e->getMessage());
+}
+
+// 2. Haal alle tassen op
+$stmt = $pdo->query("SELECT * FROM tassen ORDER BY id DESC");
+$tassen = $stmt->fetchAll();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Portfolio - Grytsje Suze</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
 </head>
 <body style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
+<<<<<<< HEAD
     <!-- Mobile Sidebar Nav (only on mobile) -->
     <div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+=======
+
+    <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+>>>>>>> 02f357fda2c5a4496c583728be3002fc3f9fa991
         <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
         <a href="index.php">
             <img src="./images/groot logo wit.png" alt="Logo" class="h-auto" style="width: 180px; transform: rotate(-90deg);">
         </a>
         <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Contact Me</a>
     </div>
+<<<<<<< HEAD
     <!-- Page wrapper: offset on mobile for sidebar -->
     <div class="flex flex-col min-h-screen pl-20 md:pl-0">
     <!-- Desktop Navbar -->
@@ -50,60 +81,67 @@
                     <p class="text-xs md:text-base text-gray-700">A bold geometric design that merges art with functionality. This structured bag is perfect for those who appreciate clean lines and modern aesthetics.</p>
                 </div>
             </div>
+=======
 
-            <!-- Item 3: Image left, Text right -->
-            <div class="flex flex-row border-b-4 border-black" style="min-height: 280px;">
-                <div class="w-1/2 overflow-hidden">
-                    <img src="./images/swirl-bag.jpg" alt="Swirl Bag" class="w-full h-full object-cover">
-                </div>
-                <div class="w-1/2 flex flex-col justify-center p-4 md:p-12">
-                    <h2 class="text-xl md:text-4xl font-bold mb-2 md:mb-4" style="font-family: 'Bebas Neue', sans-serif;">Swirl Bag</h2>
-                    <p class="text-xs md:text-base text-gray-700">Inspired by flowing movement, the swirl bag features mesmerizing patterns that catch the eye from every angle.</p>
-                </div>
+    <div class="md:ml-0 ml-12">
+        <header class="flex items-center justify-between px-4 md:px-8 py-4 border-b border-gray-300">
+            <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
+                <a href="portfolio.php" class="hover:text-gray-500">Portfolio</a>
+                <a href="contact.php" class="hover:text-gray-500">Contact Me</a>
             </div>
-            <!-- Item 4: Text left, Image right -->
-            <div class="flex flex-row-reverse border-b-4 border-black" style="min-height: 280px;">
-                <div class="w-1/2 overflow-hidden">
-                    <img src="./images/worker-bag.jpg" alt="Worker Bag" class="w-full h-full object-cover">
-                </div>
-                <div class="w-1/2 flex flex-col justify-center p-4 md:p-12">
-                    <h2 class="text-xl md:text-4xl font-bold mb-2 md:mb-4" style="font-family: 'Bebas Neue', sans-serif;">Worker Bag</h2>
-                    <p class="text-xs md:text-base text-gray-700">Built for the everyday creative. This spacious bag combines practical design with artistic flair, making it perfect for work and play.</p>
-                </div>
+            <div class="mx-auto md:mx-0">
+                <a href="index.php">
+                    <img src="./images/GS Grytsje Suze Logo goed-01.png" alt="Logo" class="h-12 md:h-16 w-auto">
+                </a>
             </div>
+            <div class="hidden md:block">
+                <div class="w-24"></div>
+            </div>
+        </header>
+>>>>>>> 02f357fda2c5a4496c583728be3002fc3f9fa991
 
-            <!-- Item 5: Image left, Text right -->
-            <div class="flex flex-row border-b-4 border-black" style="min-height: 280px;">
-                <div class="w-1/2 overflow-hidden">
-                    <img src="./images/oogtas.png" alt="Eye Bag" class="w-full h-full object-cover">
+        <main>
+            <?php
+            $count = 0;
+            foreach ($tassen as $tas):
+                // Om de beurt links en rechts wisselen (flex-row vs flex-row-reverse)
+                $isEven = ($count % 2 == 0);
+                $flexClass = $isEven ? 'flex-row' : 'flex-row-reverse';
+                ?>
+                <div class="flex <?= $flexClass ?>" style="min-height: 280px;">
+                    <div class="w-1/2 overflow-hidden bg-gray-100">
+                        <img src="./<?= htmlspecialchars($tas['afbeelding']) ?>" alt="<?= htmlspecialchars($tas['naam']) ?>"
+                        class="w-full h-full object-cover shadow-inner">
                 </div>
-                <div class="w-1/2 flex flex-col justify-center p-4 md:p-12">
-                    <h2 class="text-xl md:text-4xl font-bold mb-2 md:mb-4" style="font-family: 'Bebas Neue', sans-serif;">Eye Bag</h2>
-                    <p class="text-xs md:text-base text-gray-700">A statement piece with an eye-catching design. This unique bag is guaranteed to turn heads wherever you go.</p>
-                </div>
-            </div>
+                    <div class="w-1/2 flex flex-col justify-center p-6 md:p-12 bg-white">
+                        <h2 class="text-xl md:text-5xl font-bold mb-2 md:mb-4 uppercase" style="font-family: 'Bebas Neue', sans-serif;">
+                            <?= htmlspecialchars($tas['naam']) ?>
+                        </h2>
+                        <p class="text-xs md:text-lg text-gray-700 leading-relaxed max-w-md">
+                            <?= nl2br(htmlspecialchars($tas['beschrijving'])) ?>
+                        </p>
 
-            <!-- Item 6: Text left, Image right -->
-            <div class="flex flex-row-reverse" style="min-height: 280px;">
-                <div class="w-1/2 overflow-hidden">
-                    <img src="./images/heartbagpink.jpg" alt="Pink Heart Bag" class="w-full h-full object-cover">
+                        </div>
                 </div>
-                <div class="w-1/2 flex flex-col justify-center p-4 md:p-12">
-                    <h2 class="text-xl md:text-4xl font-bold mb-2 md:mb-4" style="font-family: 'Bebas Neue', sans-serif;">Pink Heart Bag</h2>
-                    <p class="text-xs md:text-base text-gray-700">A soft pink tone meets the iconic heart design. This bag radiates warmth and charm, perfect for any occasion.</p>
-                </div>
-            </div>
-
+            <?php
+                $count++;
+            endforeach;
+            ?>
         </main>
 
-        <!-- Footer -->
-        <footer class="border-t border-gray-300 px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-3">
-            <div><a href="index.php"><img src="./images/GS Grytsje Suze Logo goed-02.png" alt="GS Grytsje Suze Logo 02" class="h-12 w-auto"></a></div>
-            <nav class="flex gap-6 text-sm text-gray-700">
-                <a href="#" class="hover:underline">Text</a>
-                <a href="#" class="hover:underline">Text</a>
-                <a href="#" class="hover:underline">Text</a>
+        <footer class="border-t border-gray-300 px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <a href="index.php">
+                    <img src="./images/GS Grytsje Suze Logo goed-02.png" alt="Footer Logo" class="h-10 w-auto">
+                </a>
+            </div>
+            <nav class="flex gap-6 text-xs uppercase tracking-tighter text-gray-500 font-bold">
+                <a href="portfolio.php" class="hover:text-black">Portfolio</a>
+                <a href="contact.php" class="hover:text-black">Contact Me</a>
             </nav>
+            <div class="text-[10px] text-gray-400 uppercase tracking-widest">
+                &copy; <?= date('Y') ?> Grytsje Suze
+            </div>
         </footer>
     </div>
 </body>
