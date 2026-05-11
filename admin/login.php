@@ -1,6 +1,5 @@
 <?php
 
-
 session_start();
 
 // Als de gebruiker al is ingelogd, stuur ze direct door naar het dashboard
