@@ -11,27 +11,32 @@
 
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
     <!-- Navbar -->
-    <header class="px-4 md:px-8 py-4 flex items-center justify-between" style="background-color: #000;">
-        <nav class="text-white flex-1 flex justify-end text-xl md:text-4xl md:pr-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
+    <header class="px-4 md:px-8 py-2 md:py-4 flex items-center justify-between" style="background-color: #000;">
+        <nav class="text-white flex-1 flex justify-start text-base md:text-4xl md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
         <div class="flex-shrink-0 flex items-center justify-center px-3 md:px-8">
-            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-40 w-auto"></a>
+            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-16 md:h-40 w-auto"></a>
         </div>
-        <nav class="text-white flex-1 flex justify-start text-xl md:text-4xl md:pl-24 mt-8 md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
+        <nav class="text-white flex-1 flex justify-end text-base md:text-4xl md:mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
     </header>
+
+    <!-- Mobile hero banner -->
+    <div class="md:hidden w-full flex items-center px-4 py-3" style="background-color: #ff40b4;">
+        <span class="text-white text-3xl tracking-widest" style="font-family: 'Bebas Neue', sans-serif;">HANDMADE BAGS</span>
+    </div>
 
     <!-- Main -->
     <main class="flex-1 px-4 md:px-8 py-4 md:py-8">
 
         <!-- Mobile layout: 2 stacked photos + button -->
-        <div class="flex flex-col gap-3 mb-4 md:hidden">
-            <div class="rounded overflow-hidden border-4 border-black" style="height: 300px;">
+        <div class="flex flex-col gap-4 mb-4 md:hidden">
+            <div class="overflow-hidden border-4 border-black" style="height: 280px;">
                 <img src="./images/heartbagduo.jpg" alt="Heart handle bags" class="w-full h-full object-cover">
             </div>
-            <div class="rounded overflow-hidden border-4 border-black" style="height: 300px;">
+            <div class="overflow-hidden border-4 border-black" style="height: 280px;">
                 <img src="./images/geometric-bag.jpg" alt="Geometric bag" class="w-full h-full object-cover">
             </div>
             <a href="portfolio.php">
-                <button class="w-full text-white text-2xl py-5 rounded-xl transition-all duration-200 shadow-lg" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;" onmouseover="this.style.backgroundColor='#e0359e'" onmouseout="this.style.backgroundColor='#ff40b4'">SHOW MORE</button>
+                <button class="w-full text-white text-2xl py-5 transition-all duration-200 shadow-lg" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;" onmouseover="this.style.backgroundColor='#e0359e'" onmouseout="this.style.backgroundColor='#ff40b4'">SHOW MORE</button>
             </a>
         </div>
 
@@ -74,9 +79,9 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-300 px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-3">
+    <footer class="border-t-4 border-black px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div><a href="index.php"><img src="./images/GS Grytsje Suze Logo goed-02.png" alt="GS Grytsje Suze Logo 02" class="h-12 w-auto"></a></div>
-        <nav class="flex gap-6 text-sm text-gray-700">
+        <nav class="hidden md:flex gap-6 text-sm text-gray-700">
             <a href="#" class="hover:underline">Text</a>
             <a href="#" class="hover:underline">Text</a>
             <a href="#" class="hover:underline">Text</a>
