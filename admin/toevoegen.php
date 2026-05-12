@@ -7,144 +7,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nieuwe Tas Toevoegen</title>
     <link rel="stylesheet" href="../public/css/output.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 
-<body class="bg-gray-100 font-sans pb-20">
-
-    <nav class="bg-gray-900 h-16 flex items-center shadow-lg px-6 mb-10">
-        <span class="text-white font-bold uppercase tracking-widest">Admin<span
-                class="text-blue-500">Panel</span></span>
+<body class="bg-gray-100 font-sans">
+    <nav class="bg-gray-900 border-b border-gray-800 shadow-lg">
+        <div class="container mx-auto px-4 flex items-center justify-between h-16">
+            <span class="text-white text-lg font-bold tracking-wider uppercase">Admin<span
+                    class="text-blue-500">Panel</span></span>
+            <a href="index.php" class="text-gray-300 hover:text-white text-sm font-medium cursor-pointer">Terug naar
+                overzicht</a>
+        </div>
     </nav>
 
-    <div class="container mx-auto px-4 max-w-5xl">
-        <div class="bg-white shadow-xl rounded-2xl p-8">
-            <h2 class="text-2xl font-black text-gray-800 mb-8 border-b pb-4">Nieuwe Tas Toevoegen</h2>
+    <div class="container mx-auto mt-10 px-4 max-w-5xl">
+        <div class="bg-white shadow-md rounded-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8">Nieuwe Tas Toevoegen</h2>
 
             <form action="upload.php" method="POST" enctype="multipart/form-data"
                 class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Naam</label>
-                        <input type="text" name="naam" placeholder="Naam van de tas" required
-                            class="w-full border-2 border-gray-100 rounded-xl p-3 focus:border-blue-500 outline-none transition">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Naam</label>
+                        <input type="text" name="naam" required
+                            class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
-
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Beschrijving</label>
-                        <textarea name="beschrijving" rows="6" placeholder="Vertel iets over deze tas..." required
-                            class="w-full border-2 border-gray-100 rounded-xl p-3 focus:border-blue-500 outline-none transition"></textarea>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Beschrijving</label>
+                        <textarea name="beschrijving" rows="4" required
+                            class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
-
-                    <div class="bg-blue-50 p-6 rounded-2xl border-2 border-blue-100">
-                        <label class="block text-xs font-bold text-blue-400 uppercase mb-3">Kleur van de tas</label>
-                        <div class="flex items-center gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Kleurcode</label>
+                        <div class="flex items-center gap-3">
                             <input type="color" name="kleurcode" id="kleurcode" value="#3b82f6"
-                                class="h-12 w-12 cursor-pointer border-none bg-transparent">
-
+                                class="h-10 w-20 cursor-pointer">
                             <button type="button" id="pipet-btn"
-                                class="flex-1 bg-white border-2 border-blue-200 hover:border-blue-500 py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition shadow-sm font-bold text-blue-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-3">
-                                    </path>
-                                </svg>
-                                Kleur uit foto prikken
-                            </button>
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
+                                / Tik op foto</button>
                         </div>
-                        <p id="instruction-text" class="mt-3 text-[11px] text-blue-400 font-medium leading-tight">
-                            Gebruik de pipet of selecteer eerst een afbeelding om daar een kleur uit te kiezen.</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-dashed border-gray-300">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">3D Model (.glb)</label>
+                        <input type="file" name="model_3d" id="model-input" accept=".glb"
+                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer">
                     </div>
                 </div>
 
                 <div class="flex flex-col items-center">
-                    <label class="block text-xs font-bold text-gray-400 uppercase mb-3 self-start">Productfoto
-                        Preview</label>
-                    <div class="relative w-full aspect-square max-w-[400px]">
-                        <img id="preview-img" src="https://via.placeholder.com/800?text=Selecteer+Afbeelding"
-                            class="w-full h-full object-cover rounded-3xl border-8 border-white shadow-2xl transition-all duration-300 bg-gray-200">
+                    <div class="w-full aspect-square max-w-[400px] mb-4">
+                        <img id="preview-img" src="https://via.placeholder.com/400?text=Voorbeeld"
+                            class="w-full h-full object-cover rounded-xl shadow-inner border border-gray-200">
                     </div>
-                    <div class="mt-6 w-full">
-                        <input type="file" name="afbeelding" id="file-input" accept="image/*" required
-                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-gray-800 file:text-white hover:file:bg-black transition cursor-pointer">
+                    <div class="w-full">
+                        <input type="file" name="afbeelding" id="file-input" accept="image/*" required class="hidden">
+                        <button type="button" onclick="document.getElementById('file-input').click();"
+                            class="w-full bg-gray-800 hover:bg-black text-white font-bold py-3 px-6 rounded-lg transition uppercase text-xs tracking-widest cursor-pointer">📷
+                            Upload Foto</button>
                     </div>
                 </div>
 
-                <div class="md:col-span-2 flex justify-between items-center pt-8 border-t mt-4">
+                <div class="md:col-span-2 flex justify-end gap-3 pt-6 border-t mt-4">
                     <a href="index.php"
-                        class="text-gray-400 hover:text-gray-600 font-bold text-sm tracking-widest uppercase transition">Annuleren</a>
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-6 rounded-md transition cursor-pointer">Annuleren</a>
                     <button type="submit" name="submit"
-                        class="bg-green-600 hover:bg-green-700 text-white font-black py-4 px-12 rounded-2xl shadow-lg transform hover:-translate-y-1 transition-all uppercase tracking-widest">
-                        Product Toevoegen
-                    </button>
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-10 rounded-md shadow-sm transition cursor-pointer">Opslaan</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const pipetBtn = document.getElementById('pipet-btn');
-            const kleurInput = document.getElementById('kleurcode');
-            const previewImg = document.getElementById('preview-img');
-            const fileInput = document.getElementById('file-input');
-            const instruction = document.getElementById('instruction-text');
+        const pipetBtn = document.getElementById('pipet-btn');
+        const kleurInput = document.getElementById('kleurcode');
+        const previewImg = document.getElementById('preview-img');
+        const fileInput = document.getElementById('file-input');
+        let isPickingColor = false;
 
-            function updateColor(hex) {
-                kleurInput.value = hex;
+        fileInput.addEventListener('change', e => {
+            const r = new FileReader(); r.onload = ev => previewImg.src = ev.target.result;
+            r.readAsDataURL(e.target.files[0]);
+        });
+
+        if ('EyeDropper' in window) {
+            const ed = new EyeDropper();
+            pipetBtn.addEventListener('click', () => { ed.open().then(res => { kleurInput.value = res.sRGBHex; }); });
+        } else {
+            pipetBtn.addEventListener('click', () => {
+                isPickingColor = !isPickingColor;
+                if (isPickingColor) {
+                    pipetBtn.textContent = "Klik nu op de foto...";
+                    previewImg.style.cursor = "crosshair";
+                    previewImg.style.outline = "4px solid #3b82f6";
+                } else { resetPipet(); }
+            });
+            function resetPipet() {
+                isPickingColor = false;
+                pipetBtn.textContent = "Pipet / Tik op foto";
+                previewImg.style.cursor = "default";
+                previewImg.style.outline = "none";
             }
-
-            // EyeDropper (Chrome/Edge/Opera)
-            if ('EyeDropper' in window) {
-                const eyeDropper = new EyeDropper();
-                pipetBtn.addEventListener('click', () => {
-                    eyeDropper.open().then(result => updateColor(result.sRGBHex));
-                });
-            }
-            // Fallback (Firefox & iOS Safari)
-            else {
-                pipetBtn.textContent = "Tik op foto voor kleur";
-                pipetBtn.classList.replace('text-blue-600', 'text-orange-600');
-                instruction.textContent = "Klik/Tik op de geüploade foto om de exacte kleur te kiezen.";
-
-                const getColor = (e) => {
-                    if (previewImg.src.includes('placeholder')) return;
-
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = previewImg.naturalWidth;
-                    canvas.height = previewImg.naturalHeight;
+            previewImg.addEventListener('click', e => {
+                if (isPickingColor) {
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                    canvas.width = previewImg.naturalWidth; canvas.height = previewImg.naturalHeight;
                     ctx.drawImage(previewImg, 0, 0, canvas.width, canvas.height);
-
                     const rect = previewImg.getBoundingClientRect();
-                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-                    const x = (clientX - rect.left) * (canvas.width / rect.width);
-                    const y = (clientY - rect.top) * (canvas.height / rect.height);
-
-                    const pixel = ctx.getImageData(x, y, 1, 1).data;
-                    const hex = "#" + ((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2]).toString(16).slice(1);
-                    updateColor(hex);
-                };
-
-                previewImg.addEventListener('click', getColor);
-                previewImg.addEventListener('touchstart', getColor, { passive: true });
-                previewImg.style.cursor = 'crosshair';
-            }
-
-            // Preview update
-            fileInput.addEventListener('change', function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (ev) => { previewImg.src = ev.target.result; };
-                    reader.readAsDataURL(file);
+                    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+                    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+                    const p = ctx.getImageData(x, y, 1, 1).data;
+                    kleurInput.value = "#" + ((1 << 24) + (p[0] << 16) + (p[1] << 8) + p[2]).toString(16).slice(1);
+                    resetPipet();
                 }
             });
-        });
+        }
     </script>
 </body>
-
 
 </html>
