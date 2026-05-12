@@ -138,9 +138,9 @@ $tassen = $stmt->fetchAll();
                                     <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex justify-center gap-3">
                                             <a href="edit.php?id=<?= $tas['id'] ?>"
-                                                class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium transition">Bewerk</a>
+                                                class="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium transition">Bewerk</a>
                                             <button onclick="openDeleteModal(<?= $tas['id'] ?>)"
-                                                class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm font-medium transition">Verwijder</button>
+                                                class="cursor-pointer bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm font-medium transition">Verwijder</button>
                                         </div>
                                     </td>
                                 </tr>
