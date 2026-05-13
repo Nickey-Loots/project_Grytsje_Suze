@@ -33,16 +33,36 @@
                             class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Beschrijving</label>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Beschrijving:</label>
                         <textarea name="beschrijving" rows="4" required
                             class="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Kleurcode</label>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Achtergrondkleur:</label>
                         <div class="flex items-center gap-3">
                             <input type="color" name="kleurcode" id="kleurcode" value="#3b82f6"
                                 class="h-10 w-20 cursor-pointer">
                             <button type="button" id="pipet-btn"
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
+                                / Tik op foto</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Tekstkleur:</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" name="tekstkleur" id="tekstkleur" value="#000000"
+                                class="h-10 w-20 cursor-pointer">
+                            <button type="button" id="pipet-tekstkleur-btn"
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
+                                / Tik op foto</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Titelkleur:</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" name="titelkleur" id="titelkleur" value="#000000"
+                                class="h-10 w-20 cursor-pointer">
+                            <button type="button" id="pipet-titelkleur-btn"
                                 class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
                                 / Tik op foto</button>
                         </div>
@@ -55,7 +75,7 @@
                 </div>
 
                 <div class="flex flex-col items-center">
-                    <div class="w-full aspect-square max-w-[400px] mb-4">
+                    <div class="w-full aspect-square max-w-100 mb-4">
                         <img id="preview-img" src="https://via.placeholder.com/400?text=Voorbeeld"
                             class="w-full h-full object-cover rounded-xl shadow-inner border border-gray-200">
                     </div>
@@ -118,6 +138,72 @@
                     const p = ctx.getImageData(x, y, 1, 1).data;
                     kleurInput.value = "#" + ((1 << 24) + (p[0] << 16) + (p[1] << 8) + p[2]).toString(16).slice(1);
                     resetPipet();
+                }
+            });
+        }
+
+        const tekstkleurInput = document.getElementById('tekstkleur');
+        const titelkleurInput = document.getElementById('titelkleur');
+        const pipetTekstkleurBtn = document.getElementById('pipet-tekstkleur-btn');
+        const pipetTitelkleurBtn = document.getElementById('pipet-titelkleur-btn');
+
+        if ('EyeDropper' in window) {
+            const ed = new EyeDropper();
+            pipetTekstkleurBtn.addEventListener('click', () => {
+                ed.open().then(res => { tekstkleurInput.value = res.sRGBHex; });
+            });
+            pipetTitelkleurBtn.addEventListener('click', () => {
+                ed.open().then(res => { titelkleurInput.value = res.sRGBHex; });
+            });
+        } else {
+            pipetTekstkleurBtn.addEventListener('click', () => {
+                isPickingColor = !isPickingColor;
+                if (isPickingColor) {
+                    pipetTekstkleurBtn.textContent = "Klik nu op de foto...";
+                    previewImg.style.cursor = "crosshair";
+                    previewImg.style.outline = "4px solid #3b82f6";
+                } else { resetPipetTekstkleur(); }
+            });
+            pipetTitelkleurBtn.addEventListener('click', () => {
+                isPickingColor = !isPickingColor;
+                if (isPickingColor) {
+                    pipetTitelkleurBtn.textContent = "Klik nu op de foto...";
+                    previewImg.style.cursor = "crosshair";
+                    previewImg.style.outline = "4px solid #3b82f6";
+                } else { resetPipetTitelkleur(); }
+            });
+
+            function resetPipetTekstkleur() {
+                isPickingColor = false;
+                pipetTekstkleurBtn.textContent = "Pipet / Tik op foto";
+                previewImg.style.cursor = "default";
+                previewImg.style.outline = "none";
+            }
+
+            function resetPipetTitelkleur() {
+                isPickingColor = false;
+                pipetTitelkleurBtn.textContent = "Pipet / Tik op foto";
+                previewImg.style.cursor = "default";
+                previewImg.style.outline = "none";
+            }
+
+            previewImg.addEventListener('click', e => {
+                if (isPickingColor) {
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                    canvas.width = previewImg.naturalWidth; canvas.height = previewImg.naturalHeight;
+                    ctx.drawImage(previewImg, 0, 0, canvas.width, canvas.height);
+                    const rect = previewImg.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+                    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+                    const p = ctx.getImageData(x, y, 1, 1).data;
+                    const color = "#" + ((1 << 24) + (p[0] << 16) + (p[1] << 8) + p[2]).toString(16).slice(1);
+                    if (pipetTekstkleurBtn.textContent.includes("Klik nu")) {
+                        tekstkleurInput.value = color;
+                        resetPipetTekstkleur();
+                    } else if (pipetTitelkleurBtn.textContent.includes("Klik nu")) {
+                        titelkleurInput.value = color;
+                        resetPipetTitelkleur();
+                    }
                 }
             });
         }

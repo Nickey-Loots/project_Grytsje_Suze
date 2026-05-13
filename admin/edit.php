@@ -24,8 +24,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         move_uploaded_file($_FILES['model_3d']['tmp_name'], "../uploads/" . $m);
         $modelPath = "uploads/" . $m;
     }
-    $pdo->prepare("UPDATE tassen SET naam=?, beschrijving=?, afbeelding=?, kleurcode=?, model_3d=? WHERE id=?")
-        ->execute([$_POST['naam'], $_POST['beschrijving'], $fotoPath, $_POST['kleurcode'], $modelPath, $id]);
+    $pdo->prepare("UPDATE tassen SET naam=?, beschrijving=?, afbeelding=?, kleurcode=?, model_3d=?, tekst_kleur=?, titel_kleur=? WHERE id=?")
+        ->execute([
+            $_POST['naam'],
+            $_POST['beschrijving'],
+            $fotoPath,
+            $_POST['kleurcode'],
+            $modelPath,
+            $_POST['tekst_kleur'],
+            $_POST['titel_kleur'],
+            $id
+        ]);
     header("Location: index.php");
     exit;
 }
@@ -66,17 +75,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <model-viewer src="../<?= $tas['model_3d'] ?>" auto-rotate camera-controls shadow-intensity="1"
                             class="w-full h-48 bg-gray-50 rounded-lg"></model-viewer>
                         <input type="file" name="model_3d" accept=".glb"
-                            class="mt-4 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer">
+                            class="mt-4 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer">
                     </div>
 
-                    <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                        <input type="color" name="kleurcode" id="kleurcode" value="<?= $tas['kleurcode'] ?>"
-                            class="h-10 w-16 cursor-pointer">
-                        <button type="button" id="pipet-btn"
-                            class="bg-white border border-gray-300 py-2 px-4 rounded font-semibold text-sm transition cursor-pointer">Pipet
-                            / Tik op foto</button>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Achtergrondkleur:</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" name="kleurcode" id="kleurcode" value="<?= $tas['kleurcode'] ?>"
+                                class="h-10 w-20 cursor-pointer">
+                            <button type="button" id="pipet-btn"
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
+                                / Tik op foto</button>
+                        </div>
                     </div>
-                </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Tekstkleur:</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" name="tekst_kleur" id="tekst_kleur" value="<?= $tas['tekst_kleur'] ?? '#000000' ?>"
+                                class="h-10 w-20 cursor-pointer">
+                            <button type="button" id="pipet-tekst-kleur-btn"
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
+                                / Tik op foto</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Titelkleur:</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" name="titel_kleur" id="titel_kleur" value="<?= $tas['titel_kleur'] ?? '#000000' ?>"
+                                class="h-10 w-20 cursor-pointer">
+                            <button type="button" id="pipet-titel-kleur-btn"
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-semibold text-sm transition cursor-pointer">Pipet
+                                / Tik op foto</button>
+                        </div>
+                    </div>
+                    </div>
 
                 <div class="flex flex-col items-center">
                     <img id="preview-img" src="../<?= $tas['afbeelding'] ?>"
@@ -103,6 +135,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const previewImg = document.getElementById('preview-img');
         const fileInput = document.getElementById('file-input');
         const kleurInput = document.getElementById('kleurcode');
+        const tekstkleurInput = document.getElementById('tekst_kleur');
+        const titelkleurInput = document.getElementById('titel_kleur');
+        const pipetTekstkleurBtn = document.getElementById('pipet-tekst-kleur-btn');
+        const pipetTitelkleurBtn = document.getElementById('pipet-titel-kleur-btn');
         let isPickingColor = false;
 
         fileInput.addEventListener('change', e => {
@@ -113,6 +149,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ('EyeDropper' in window) {
             const ed = new EyeDropper();
             pipetBtn.addEventListener('click', () => { ed.open().then(res => { kleurInput.value = res.sRGBHex; }); });
+            pipetTekstkleurBtn.addEventListener('click', () => {
+                ed.open().then(res => { tekstkleurInput.value = res.sRGBHex; });
+            });
+            pipetTitelkleurBtn.addEventListener('click', () => {
+                ed.open().then(res => { titelkleurInput.value = res.sRGBHex; });
+            });
         } else {
             pipetBtn.addEventListener('click', () => {
                 isPickingColor = !isPickingColor;
@@ -137,10 +179,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
                     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
                     const p = ctx.getImageData(x, y, 1, 1).data;
-                    kleurInput.value = "#" + ((1 << 24) + (p[0] << 16) + (p[1] << 8) + p[2]).toString(16).slice(1);
-                    resetPipet();
+                    const color = "#" + ((1 << 24) + (p[0] << 16) + (p[1] << 8) + p[2]).toString(16).slice(1);
+                    if (pipetTekstkleurBtn.textContent.includes("Klik nu")) {
+                        tekstkleurInput.value = color;
+                        resetPipetTekstkleur();
+                    } else if (pipetTitelkleurBtn.textContent.includes("Klik nu")) {
+                        titelkleurInput.value = color;
+                        resetPipetTitelkleur();
+                    }
                 }
             });
+            pipetTekstkleurBtn.addEventListener('click', () => {
+                isPickingColor = !isPickingColor;
+                if (isPickingColor) {
+                    pipetTekstkleurBtn.textContent = "Klik nu op de foto...";
+                    previewImg.style.cursor = "crosshair";
+                    previewImg.style.outline = "4px solid #3b82f6";
+                } else { resetPipetTekstkleur(); }
+            });
+            pipetTitelkleurBtn.addEventListener('click', () => {
+                isPickingColor = !isPickingColor;
+                if (isPickingColor) {
+                    pipetTitelkleurBtn.textContent = "Klik nu op de foto...";
+                    previewImg.style.cursor = "crosshair";
+                    previewImg.style.outline = "4px solid #3b82f6";
+                } else { resetPipetTitelkleur(); }
+            });
+
+            function resetPipetTekstkleur() {
+                isPickingColor = false;
+                pipetTekstkleurBtn.textContent = "Pipet / Tik op foto";
+                previewImg.style.cursor = "default";
+                previewImg.style.outline = "none";
+            }
+
+            function resetPipetTitelkleur() {
+                isPickingColor = false;
+                pipetTitelkleurBtn.textContent = "Pipet / Tik op foto";
+                previewImg.style.cursor = "default";
+                previewImg.style.outline = "none";
+            }
         }
     </script>
 </body>
