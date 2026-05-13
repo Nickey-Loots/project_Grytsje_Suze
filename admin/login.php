@@ -11,8 +11,8 @@ if (isset($_SESSION['user_id'])) {
 // Database verbinding
 $host = 'localhost';
 $db = 'grytsje suze';
-$user = 'bit_academy';
-$pass = 'bit_academy';
+$user = 'bitacademy';
+$pass = 'bitacademy';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
