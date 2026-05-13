@@ -46,6 +46,7 @@ function getContrastColor($hexColor)
 ?>
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,14 +54,19 @@ function getContrastColor($hexColor)
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
 </head>
+
 <body style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
-    
-    <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
-        <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
+
+    <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8"
+        style="background-color: #000;">
+        <a href="portfolio.php" class="text-white text-sm"
+            style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
         <a href="index.php">
             <img src="./images/groot logo wit.png" alt="Logo" class="w-8 h-auto">
         </a>
-        <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; letter-spacing: 0.12em;">Contact Me</a>
+        <a href="contact.php" class="text-white text-sm"
+            style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; letter-spacing: 0.12em;">Contact
+            Me</a>
     </div>
 
     <div class="md:ml-0 ml-12">
@@ -84,24 +90,28 @@ function getContrastColor($hexColor)
                 $isEven = ($count % 2 == 0);
                 $flexClass = $isEven ? 'flex-row' : 'flex-row-reverse';
 
-                // Haal de juiste tekstkleur op (zwart of wit)
-                $textColorClass = getContrastColor($tas['kleurcode']);
+
                 // Gebruik de kleurcode uit de DB, fallback naar wit als deze leeg is
                 $bgColor = !empty($tas['kleurcode']) ? $tas['kleurcode'] : '#ffffff';
+                // Haal de titelkleur en tekstkleur op uit de DB, fallback naar zwart als deze leeg is
+                $titleColor = !empty($tas['titel_kleur']) ? $tas['titel_kleur'] : '#000000';
+                $textColor = !empty($tas['tekst_kleur']) ? $tas['tekst_kleur'] : '#000000';
                 ?>
                     <div class="flex <?= $flexClass ?>" style="min-height: 400px;">
                     <div class="w-1/2 overflow-hidden bg-gray-100">
                         <img src="./<?= htmlspecialchars($tas['afbeelding']) ?>" alt="<?= htmlspecialchars($tas['naam']) ?>"
                             class="w-full h-full object-cover">
-                        </div>
+                    </div>
 
                     <div class="w-1/2 flex flex-col justify-center p-6 md:p-12 <?= $textColorClass ?>"
-    style="background-color: <?= $bgColor ?>;">
-                        <h2 class="text-xl md:text-5xl font-bold mb-2 md:mb-4 uppercase" style="font-family: 'Bebas Neue', sans-serif;">
+                        style="background-color: <?= $bgColor ?>;">
+
+                        <h2 class="text-xl md:text-5xl font-bold mb-2 md:mb-4 uppercase"
+                            style="font-family: 'Bebas Neue', sans-serif; color: <?= $titleColor ?>;">
                             <?= htmlspecialchars($tas['naam']) ?>
                         </h2>
 
-                        <p class="text-xs md:text-lg opacity-90 leading-relaxed max-w-md">
+                        <p class="text-xs md:text-lg opacity-90 leading-relaxed max-w-md" style="color: <?= $textColor ?>;">
                             <?= nl2br(htmlspecialchars($tas['beschrijving'])) ?>
                         </p>
 
@@ -114,13 +124,14 @@ function getContrastColor($hexColor)
                         <?php endif; ?>
                     </div>
                 </div>
-            <?php
-            $count++;
+                <?php
+                    $count++;
             endforeach;
             ?>
         </main>
 
-        <footer class="border-t border-gray-300 px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 bg-white">
+        <footer
+            class="border-t border-gray-300 px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 bg-white">
             <div>
                 <a href="index.php">
                     <img src="./images/GS Grytsje Suze Logo goed-02.png" alt="Footer Logo" class="h-10 w-auto">
@@ -136,4 +147,5 @@ function getContrastColor($hexColor)
         </footer>
     </div>
 </body>
+
 </html>

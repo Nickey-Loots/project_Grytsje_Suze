@@ -473,6 +473,9 @@
   .max-w-7xl {
     max-width: var(--container-7xl);
   }
+  .max-w-100 {
+    max-width: calc(var(--spacing) * 100);
+  }
   .max-w-\[400px\] {
     max-width: 400px;
   }
