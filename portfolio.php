@@ -2,8 +2,8 @@
 // 1. Database verbinding
 $host = 'localhost';
 $db = 'grytsje suze';
-$user = 'bit_academy';
-$pass = 'bit_academy';
+$user = 'bitacademy';
+$pass = 'bitacademy';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -56,14 +56,15 @@ function getContrastColor($hexColor)
 </head>
 
 <body style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
-<<<<<<< HEAD
-    <!-- Mobile Sidebar Nav (only on mobile) -->
-    <div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
-=======
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
 >>>>>>> 02f357fda2c5a4496c583728be3002fc3f9fa991
+=======
+    <!-- Mobile Sidebar Nav -->
+    <div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+>>>>>>> webpage
         <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
 =======
     <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8"
@@ -82,43 +83,11 @@ function getContrastColor($hexColor)
             Me</a>
 >>>>>>> d36996067eb81731e2f06feab564f73354bbf235
     </div>
-<<<<<<< HEAD
+
     <!-- Page wrapper: offset on mobile for sidebar -->
     <div class="flex flex-col min-h-screen pl-20 md:pl-0">
-    <!-- Desktop Navbar -->
-    <header class="hidden md:flex px-8 py-4 items-center justify-between" style="background-color: #000;">
-        <nav class="text-white flex-1 flex justify-start text-4xl mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
-        <div class="flex-shrink-0 flex items-center justify-center px-8">
-            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-40 w-auto"></a>
-        </div>
-        <nav class="text-white flex-1 flex justify-end text-4xl mt-12" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
-    </header>
-        <!-- Portfolio Items -->
-        <main class="flex-1 border-t-4 border-black relative">
-            <!-- Center line -->
-            <div class="absolute top-0 bottom-0 left-1/2 bg-black" style="width: 4px; transform: translateX(-50%);"></div>
-            <!-- Item 1: Image left, Text right -->
-            <div class="flex flex-row border-b-4 border-black" style="min-height: 280px;">
-                <div class="w-1/2 overflow-hidden">
-                    <img src="./images/heartbagduo.jpg" alt="Heart Handle Bags" class="w-full h-full object-cover">
-                </div>
-                <div class="w-1/2 flex flex-col justify-center p-4 md:p-12">
-                    <h2 class="text-xl md:text-4xl font-bold mb-2 md:mb-4" style="font-family: 'Bebas Neue', sans-serif;">Heart Handle Bags</h2>
-                    <p class="text-xs md:text-base text-gray-700">Handmade heart handle bags crafted with love and precision. Each bag features unique heart-shaped handles that make a bold fashion statement.</p>
-                </div>
-            </div>
-            <!-- Item 2: Text left, Image right -->
-            <div class="flex flex-row-reverse border-b-4 border-black" style="min-height: 280px;">
-                <div class="w-1/2 overflow-hidden">
-                    <img src="./images/geometric-bag.jpg" alt="Geometric Bag" class="w-full h-full object-cover">
-                </div>
-                <div class="w-1/2 flex flex-col justify-center p-4 md:p-12">
-                    <h2 class="text-xl md:text-4xl font-bold mb-2 md:mb-4" style="font-family: 'Bebas Neue', sans-serif;">Geometric Bag</h2>
-                    <p class="text-xs md:text-base text-gray-700">A bold geometric design that merges art with functionality. This structured bag is perfect for those who appreciate clean lines and modern aesthetics.</p>
-                </div>
-            </div>
-=======
 
+<<<<<<< HEAD
     <div class="md:ml-0 ml-12">
         <header class="flex items-center justify-between px-4 md:px-8 py-4 border-b border-gray-300 bg-white">
             <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
@@ -131,8 +100,43 @@ function getContrastColor($hexColor)
                 </a>
             </div>
             <div class="hidden md:block w-24"></div>
+=======
+    <!-- Desktop Navbar -->
+    <div class="relative hidden md:block" style="padding-top: 50px; margin-top: 5px;">
+        <!-- Logo bump: rises UP above the black bar into the white space -->
+        <div style="
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 100px;
+            background-color: #000;
+            border-radius: 95px 95px 0 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 2px;
+            z-index: 10;
+        ">
+            <a href="index.php">
+                <img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" style="height: 96px; width: auto;">
+            </a>
+        </div>
+
+        <!-- Black bar -->
+        <header class="flex items-center justify-between px-6 md:px-16" style="background-color: #000; height: 75px;">
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="portfolio.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Portfolio</a>
+            </nav>
+            <!-- spacer so text doesn't overlap logo bump -->
+            <div style="width: 160px; flex-shrink: 0;"></div>
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="contact.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Contact Me</a>
+            </nav>
+>>>>>>> webpage
         </header>
->>>>>>> 02f357fda2c5a4496c583728be3002fc3f9fa991
+    </div>
 
         <main>
             <?php
