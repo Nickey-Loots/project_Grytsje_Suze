@@ -47,13 +47,40 @@ $tassen = $stmt->fetchAll();
     <div class="flex flex-col min-h-screen pl-20 md:pl-0">
 
     <!-- Desktop Navbar -->
-    <header class="hidden md:flex px-8 py-4 items-center justify-between" style="background-color: #000;">
-        <nav class="text-white flex-1 flex justify-end text-4xl mt-12 pr-24" style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a></nav>
-        <div class="flex-shrink-0 flex items-center justify-center px-8">
-            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" class="h-40 w-auto"></a>
+    <div class="relative hidden md:block" style="padding-top: 50px; margin-top: 5px;">
+        <!-- Logo bump: rises UP above the black bar into the white space -->
+        <div style="
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 100px;
+            background-color: #000;
+            border-radius: 95px 95px 0 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 2px;
+            z-index: 10;
+        ">
+            <a href="index.php">
+                <img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" style="height: 96px; width: auto;">
+            </a>
         </div>
-        <nav class="text-white flex-1 flex justify-start text-4xl mt-12 pl-24" style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
-    </header>
+
+        <!-- Black bar -->
+        <header class="flex items-center justify-between px-6 md:px-16" style="background-color: #000; height: 75px;">
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="portfolio.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Portfolio</a>
+            </nav>
+            <!-- spacer so text doesn't overlap logo bump -->
+            <div style="width: 160px; flex-shrink: 0;"></div>
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="contact.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Contact Me</a>
+            </nav>
+        </header>
+    </div>
 
         <main>
             <?php
