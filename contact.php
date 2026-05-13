@@ -55,33 +55,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
 
-    <!-- Navbar -->
-    <header class="px-4 md:px-8 py-4 flex items-center justify-between" style="background-color: #000;">
-        <nav class="text-white flex-1 flex justify-end text-xl md:text-4xl md:pr-24 mt-8 md:mt-12"
-            style="font-family: 'Bebas Neue', sans-serif;"><a href="portfolio.php" class="text-white">Portfolio</a>
-        </nav>
-        <div class="shrink-0 flex items-center justify-center px-3 md:px-8">
-            <a href="index.php"><img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo"
-                    class="h-16 md:h-28 w-auto"></a>
+    <!-- Navbar wrapper: white top space + black bar -->
+    <div class="relative" style="padding-top: 50px; margin-top: 5px;">
+        <!-- Logo bump: rises UP above the black bar into the white space -->
+        <div style="
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 100px;
+            background-color: #000;
+            border-radius: 95px 95px 0 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 2px;
+            z-index: 10;
+        ">
+            <a href="index.php">
+                <img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" style="height: 96px; width: auto;">
+            </a>
         </div>
-        <nav class="text-white flex-1 flex justify-start text-xl md:text-4xl md:pl-24 mt-8 md:mt-12"
-            style="font-family: 'Bebas Neue', sans-serif;"><a href="contact.php" class="text-white">Contact Me</a></nav>
-    </header>
+
+        <!-- Black bar -->
+        <header class="flex items-center justify-between px-6 md:px-16" style="background-color: #000; height: 75px;">
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="portfolio.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Portfolio</a>
+            </nav>
+            <!-- spacer so text doesn't overlap logo bump -->
+            <div style="width: 160px; flex-shrink: 0;"></div>
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="contact.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Contact Me</a>
+            </nav>
+        </header>
+    </div>
 
     <!-- Main -->
     <main class="flex-1 px-4 md:px-8 py-6 md:py-8">
 
         <!-- Heading banner -->
-        <div class="mb-6 md:mb-8 flex justify-start items-center max-w-7xl mx-auto">
-            <div class="flex items-center px-4 md:px-6 pt-4 md:pt-6 pb-2 md:pb-3"
-                style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em;">
-                <span class="text-white" style="font-size: clamp(2rem, 8vw, 4.5rem); line-height: 1;">GET IN
-                    TOUCH</span>
+        <div class="mb-4 md:mb-8 flex justify-start items-center max-w-7xl mx-auto">
+            <div class="flex items-center px-3 md:px-6 pt-3 md:pt-6 pb-2 md:pb-3" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em;">
+                <span class="text-white" style="font-size: clamp(1.8rem, 8vw, 4.5rem); line-height: 1;">GET IN TOUCH</span>
             </div>
         </div>
 
         <!-- Contact section -->
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:items-center">
 
             <!-- Contact form -->
             <div class="p-6 md:p-8" style="background-color: #000;">

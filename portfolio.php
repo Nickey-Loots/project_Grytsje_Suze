@@ -2,8 +2,8 @@
 // 1. Database verbinding
 $host = 'localhost';
 $db = 'grytsje suze';
-$user = 'bit_academy';
-$pass = 'bit_academy';
+$user = 'bitacademy';
+$pass = 'bitacademy';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -57,18 +57,37 @@ function getContrastColor($hexColor)
 
 <body style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+>>>>>>> 02f357fda2c5a4496c583728be3002fc3f9fa991
+=======
+    <!-- Mobile Sidebar Nav -->
+    <div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+>>>>>>> webpage
+        <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
+=======
     <div class="md:hidden fixed left-0 top-0 h-full w-12 z-50 flex flex-col items-center justify-between py-8"
         style="background-color: #000;">
         <a href="portfolio.php" class="text-white text-sm"
             style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
+>>>>>>> d36996067eb81731e2f06feab564f73354bbf235
         <a href="index.php">
-            <img src="./images/groot logo wit.png" alt="Logo" class="w-8 h-auto">
+            <img src="./images/groot logo wit.png" alt="Logo" class="h-auto" style="width: 180px; transform: rotate(-90deg);">
         </a>
+<<<<<<< HEAD
+        <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Contact Me</a>
+=======
         <a href="contact.php" class="text-white text-sm"
             style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; letter-spacing: 0.12em;">Contact
             Me</a>
+>>>>>>> d36996067eb81731e2f06feab564f73354bbf235
     </div>
 
+    <!-- Page wrapper: offset on mobile for sidebar -->
+    <div class="flex flex-col min-h-screen pl-20 md:pl-0">
+
+<<<<<<< HEAD
     <div class="md:ml-0 ml-12">
         <header class="flex items-center justify-between px-4 md:px-8 py-4 border-b border-gray-300 bg-white">
             <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
@@ -81,7 +100,43 @@ function getContrastColor($hexColor)
                 </a>
             </div>
             <div class="hidden md:block w-24"></div>
+=======
+    <!-- Desktop Navbar -->
+    <div class="relative hidden md:block" style="padding-top: 50px; margin-top: 5px;">
+        <!-- Logo bump: rises UP above the black bar into the white space -->
+        <div style="
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 100px;
+            background-color: #000;
+            border-radius: 95px 95px 0 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 2px;
+            z-index: 10;
+        ">
+            <a href="index.php">
+                <img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" style="height: 96px; width: auto;">
+            </a>
+        </div>
+
+        <!-- Black bar -->
+        <header class="flex items-center justify-between px-6 md:px-16" style="background-color: #000; height: 75px;">
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="portfolio.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Portfolio</a>
+            </nav>
+            <!-- spacer so text doesn't overlap logo bump -->
+            <div style="width: 160px; flex-shrink: 0;"></div>
+            <nav style="font-family: 'Bebas Neue', sans-serif;">
+                <a href="contact.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Contact Me</a>
+            </nav>
+>>>>>>> webpage
         </header>
+    </div>
 
         <main>
             <?php
