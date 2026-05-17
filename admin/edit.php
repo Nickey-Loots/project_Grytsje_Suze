@@ -3,8 +3,8 @@ include 'auth.php';
 $host = 'localhost';
 $db = 'grytsje suze';
 <<<<<<< HEAD
-$user = 'bit_academy';
-$pass = 'bit_academy';
+$user = 'bitacademy';
+$pass = 'bitacademy';
 $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 =======
 $user = 'bitacademy';

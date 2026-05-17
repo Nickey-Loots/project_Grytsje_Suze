@@ -4,146 +4,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Grytsje Suze — Design made to be seen, meant to be felt</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
 </head>
 
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
-    <!-- Navbar wrapper: white top space + black bar -->
-    <div class="relative" style="padding-top: 50px; margin-top: 5px;">
-        <!-- Logo bump: rises UP above the black bar into the white space -->
-        <div style="
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 190px;
-            height: 100px;
-            background-color: #000;
-            border-radius: 95px 95px 0 0;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 2px;
-            z-index: 10;
-        ">
-            <a href="index.php">
-                <img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" style="height: 96px; width: auto;">
-            </a>
-        </div>
 
-        <!-- Black bar -->
-        <header class="flex items-center justify-between px-6 md:px-16" style="background-color: #000; height: 75px;">
-            <nav style="font-family: 'Bebas Neue', sans-serif;">
-                <a href="portfolio.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Portfolio</a>
-            </nav>
-            <!-- spacer so text doesn't overlap logo bump -->
-            <div style="width: 160px; flex-shrink: 0;"></div>
-            <nav style="font-family: 'Bebas Neue', sans-serif;">
-                <a href="contact.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Contact Me</a>
-            </nav>
-        </header>
+<?php include __DIR__ . '/includes/nav.php'; ?>
+
+<style>
+    .catalogue-wrapper { overflow: hidden; width: 100%; background-color: #000; padding: 12px 0; }
+    .catalogue-track { display: flex; width: max-content; will-change: transform; }
+    .catalogue-item { flex-shrink: 0; width: 700px; height: 850px; margin: 0 12px; overflow: hidden; border: 4px solid #fff; }
+    .catalogue-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+</style>
+
+<main class="flex-1">
+
+    <!-- HERO SLOGAN -->
+    <section style="background-color: #000; padding: 4rem 2rem 2rem; text-align: center;">
+        <h1 style="font-family: 'Bebas Neue', sans-serif; color: #fff; font-size: clamp(2.5rem, 8vw, 7rem); line-height: 1.05; letter-spacing: 0.02em;">
+            Design made to be seen,<br><span style="color: #ff40b4;">meant to be felt.</span>
+        </h1>
+    </section>
+
+    <!-- HERO CAROUSEL -->
+    <div class="catalogue-wrapper">
+        <div class="catalogue-track" id="catalogueTrack">
+            <?php
+            $imgDir = __DIR__ . '/images/';
+            $excluded = ['groot logo wit.png', 'GS Grytsje Suze Logo goed-01.png', 'GS Grytsje Suze Logo goed-02.png', 'GSLOGOWIT'];
+            $extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $images = [];
+            foreach (scandir($imgDir) as $file) {
+                $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                if (in_array($ext, $extensions) && !in_array($file, $excluded)) {
+                    $images[] = $file;
+                }
+            }
+            shuffle($images);
+            foreach ($images as $img):
+            ?>
+            <div class="catalogue-item">
+                <img src="./images/<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>">
+            </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
-    <!-- Mobile hero banner -->
-    <div class="md:hidden w-full flex items-center px-4 py-3" style="background-color: #ff40b4;">
-        <span class="text-white text-3xl tracking-widest" style="font-family: 'Bebas Neue', sans-serif;">HANDMADE BAGS</span>
+    <!-- See More of My Work -->
+    <div class="flex justify-center py-8" style="background-color: #000;">
+        <a href="portfolio.php" class="text-white text-2xl px-16 py-4 inline-block transition-all duration-200 shadow-lg"
+           style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;"
+           onmouseover="this.style.backgroundColor='#e0359e'"
+           onmouseout="this.style.backgroundColor='#ff40b4'">See More of My Work →</a>
     </div>
 
-    <!-- Main -->
-    <style>
-        .catalogue-wrapper {
-            overflow: hidden;
-            width: 100%;
-            background-color: #000;
-            padding: 12px 0;
-        }
-        .catalogue-track {
-            display: flex;
-            width: max-content;
-            will-change: transform;
-        }
-        .catalogue-item {
-            flex-shrink: 0;
-            width: 340px;
-            height: 420px;
-            margin: 0 8px;
-            overflow: hidden;
-            border: 4px solid #fff;
-        }
-        .catalogue-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-    </style>
-
-    <main class="flex-1 py-4 md:py-8">
-
-        <!-- Full-width sliding catalogue -->
-        <div class="catalogue-wrapper mb-8 md:mb-12">
-            <div class="catalogue-track" id="catalogueTrack">
-                <div class="catalogue-item"><img src="./images/heartbagduo.jpg" alt="Heart Bag Duo"></div>
-                <div class="catalogue-item"><img src="./images/geometric-bag.jpg" alt="Geometric Bag"></div>
-                <div class="catalogue-item"><img src="./images/worker-bag.jpg" alt="Worker Bag"></div>
-                <div class="catalogue-item"><img src="./images/swirl-bag.jpg" alt="Swirl Bag"></div>
-                <div class="catalogue-item"><img src="./images/heartbagpink.jpg" alt="Heart Bag Pink"></div>
-                <div class="catalogue-item"><img src="./images/heart-bags.jpg" alt="Heart Bags"></div>
-                <div class="catalogue-item"><img src="./images/oogtas.png" alt="Oogtas"></div>
+    <!-- WHAT'S IN MY BAG (mini About) -->
+    <section style="background-color: #fff; padding: 5rem 2rem;">
+        <div class="max-w-4xl mx-auto">
+            <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 1rem;">✦ WHAT'S IN MY BAG</p>
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 2rem; color: #000;">
+                Bags that carry more than objects.<br>They carry presence.
+            </h2>
+            <p style="font-size: 1.05rem; color: #333; line-height: 1.9; max-width: 680px;">
+                Leather as a medium for expression. Sculptural, bold and playful. Not silent accessories — but statements and conversation pieces that invite interaction and interpretation.
+            </p>
+            <div class="mt-8">
+                <a href="about.php" class="text-white text-xl px-10 py-4 inline-block transition-all duration-200"
+                   style="background-color: #000; font-family: 'Bebas Neue', sans-serif;"
+                   onmouseover="this.style.backgroundColor='#ff40b4'"
+                   onmouseout="this.style.backgroundColor='#000'">About the Studio →</a>
             </div>
         </div>
+    </section>
 
-        <!-- "Show More" button -->
-        <div class="flex justify-center mb-8 md:mb-12 px-4">
-            <a href="portfolio.php">
-                <button class="text-white text-2xl px-16 py-4 transition-all duration-200 shadow-lg" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;" onmouseover="this.style.backgroundColor='#e0359e'" onmouseout="this.style.backgroundColor='#ff40b4'">SHOW MORE</button>
-            </a>
-        </div>
+    <!-- WAYS TO WORK TOGETHER -->
+    <section style="background-color: #f5f5f5; padding: 5rem 2rem;">
+        <div class="max-w-5xl mx-auto">
+            <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 0.5rem; text-align: center;">✦ WAYS TO WORK TOGETHER</p>
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: 1rem; color: #000;">
+                My work moves between brand collaborations<br class="hidden md:inline"> and private commissions.
+            </h2>
+            <p style="text-align: center; color: #555; margin-bottom: 3rem; font-size: 1rem;">Choose the context that fits your project:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <!-- About Me Section -->
-        <section class="mt-8 md:mt-12 px-4 md:px-8">
-            <!-- Top colour bar -->
-            <div class="-mx-4 md:-mx-8 mb-6" style="height: 5px; background-color: #ff40b4;"></div>
+                <!-- Collaborations -->
+                <div style="background-color: #000; padding: 3rem 2.5rem;">
+                    <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 1rem;">✦ COLLABORATIONS</p>
+                    <p style="color: #fff; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">For brands, campaigns, film and creative productions.</p>
+                    <a href="collaborations.php" class="inline-block text-black text-xl px-8 py-3 transition-all duration-200"
+                       style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;"
+                       onmouseover="this.style.backgroundColor='#e0359e'"
+                       onmouseout="this.style.backgroundColor='#ff40b4'">→ Explore Collaborations</a>
+                </div>
 
-            <div class="max-w-3xl mx-auto px-2 md:px-0">
-                <h2 class="text-4xl md:text-6xl mb-4" style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4;">About Me</h2>
-                <p class="text-base md:text-lg text-gray-700 leading-relaxed">
-                    Grytsje believes that the value of design is born in the concept: the idea, the form, and the meaning.
-                    By collaborating with specialised partners, she realises designs at the highest level — without
-                    compromising creative integrity.
-                    <span id="about-more" class="hidden">
-                        In the long term, she positions herself as an international designer at the intersection of art,
-                        design, and functionality within fashion, film, and brand concepts.
-                    </span>
-                </p>
-                <button
-                    id="read-more-btn"
-                    onclick="document.getElementById('about-more').classList.toggle('hidden'); this.textContent = this.textContent === 'READ MORE' ? 'READ LESS' : 'READ MORE';"
-                    class="mt-4 text-white text-lg px-8 py-3 transition-all duration-200 shadow"
-                    style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;"
-                    onmouseover="this.style.backgroundColor='#e0359e'"
-                    onmouseout="this.style.backgroundColor='#ff40b4'">READ MORE</button>
+                <!-- Commissions -->
+                <div style="background-color: #ff40b4; padding: 3rem 2.5rem;">
+                    <p style="font-family: 'Bebas Neue', sans-serif; color: #000; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 1rem;">✦ COMMISSIONS</p>
+                    <p style="color: #000; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">For bespoke pieces, collectors and private clients.</p>
+                    <a href="commissions.php" class="inline-block text-white text-xl px-8 py-3 transition-all duration-200"
+                       style="background-color: #000; font-family: 'Bebas Neue', sans-serif;"
+                       onmouseover="this.style.backgroundColor='#222'"
+                       onmouseout="this.style.backgroundColor='#000'">→ Explore Commissions</a>
+                </div>
+
             </div>
+        </div>
+    </section>
 
-            <!-- Bottom colour bar -->
-            <div class="-mx-4 md:-mx-8 mt-6" style="height: 5px; background-color: #ff40b4;"></div>
-        </section>
+    <!-- NEWS TEASER -->
+    <section style="background-color: #000; padding: 5rem 2rem;">
+        <div class="max-w-4xl mx-auto">
+            <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 0.5rem;">✦ NEWS</p>
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #fff; margin-bottom: 1rem;">Latest Updates</h2>
+            <p style="color: #aaa; font-size: 1rem; line-height: 1.8; margin-bottom: 2.5rem;">Studio updates, expositions, recent work and projects.</p>
+            <a href="news.php" class="inline-block text-black text-xl px-10 py-4 transition-all duration-200"
+               style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;"
+               onmouseover="this.style.backgroundColor='#e0359e'"
+               onmouseout="this.style.backgroundColor='#ff40b4'">View News →</a>
+        </div>
+    </section>
 
-    </main>
+    <!-- CONTACT CTA -->
+    <section style="background-color: #fff; padding: 5rem 2rem;">
+        <div class="max-w-3xl mx-auto">
+            <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 0.5rem;">✦ GET IN TOUCH</p>
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #000; margin-bottom: 1rem;">Feel free to reach out.</h2>
+            <p style="color: #555; font-size: 1rem; margin-bottom: 2.5rem;">For more information, collaborations, commissions or just to say hello.</p>
+            <a href="contact.php" class="inline-block text-white text-xl px-10 py-4 transition-all duration-200"
+               style="background-color: #000; font-family: 'Bebas Neue', sans-serif;"
+               onmouseover="this.style.backgroundColor='#ff40b4'"
+               onmouseout="this.style.backgroundColor='#000'">Send Inquiry →</a>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="border-t-4 border-black px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-3">
-        <div><a href="index.php"><img src="./images/GS Grytsje Suze Logo goed-02.png" alt="GS Grytsje Suze Logo 02" class="h-12 w-auto"></a></div>
-        <nav class="hidden md:flex gap-6 text-sm text-gray-700">
-            <a href="#" class="hover:underline">Text</a>
-            <a href="#" class="hover:underline">Text</a>
-            <a href="#" class="hover:underline">Text</a>
-        </nav>
-    </footer>
+</main>
 
-    <script src="./script.js"></script>
+<!-- Floating Reach Out Button -->
+<a href="contact.php"
+   class="fixed bottom-8 right-8 z-50 inline-flex items-center gap-2 text-black text-lg px-6 py-3 shadow-2xl transition-all duration-200"
+   style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; border-radius: 50px;"
+   onmouseover="this.style.backgroundColor='#e0359e'"
+   onmouseout="this.style.backgroundColor='#ff40b4'">✦ Reach Out</a>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
+
+<script src="./script.js"></script>
 
 </body>
 </html>

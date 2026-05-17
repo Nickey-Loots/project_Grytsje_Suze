@@ -1,112 +1,213 @@
+<?php
+// Handle form submission
+$errors = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $inquiry_type = trim(htmlspecialchars($_POST['inquiry_type'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $name         = trim(htmlspecialchars($_POST['name'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $email        = trim($_POST['email'] ?? '');
+    $company      = trim(htmlspecialchars($_POST['company'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $project      = trim(htmlspecialchars($_POST['project'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $timeline     = trim(htmlspecialchars($_POST['timeline'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $budget       = trim(htmlspecialchars($_POST['budget'] ?? '', ENT_QUOTES, 'UTF-8'));
+
+    // Validate required fields
+    if (empty($inquiry_type)) $errors[] = 'Please select an inquiry type.';
+    if (empty($name))         $errors[] = 'Name is required.';
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'A valid email address is required.';
+    if (empty($project))      $errors[] = 'Please describe your project or request.';
+
+    if (empty($errors)) {
+        $studioEmail = 'GrytsjeSuze@hotmail.com';
+        $safeEmail   = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+        // Notification email to studio
+        $notifSubject = "New Inquiry: {$inquiry_type} – from {$name}";
+        $notifBody    = "New inquiry received via the website.\n\n";
+        $notifBody   .= "Type:    {$inquiry_type}\n";
+        $notifBody   .= "Name:    {$name}\n";
+        $notifBody   .= "Email:   {$safeEmail}\n";
+        if ($company) $notifBody .= "Company: {$company}\n";
+        $notifBody   .= "\nProject / Request:\n{$project}\n";
+        if ($timeline) $notifBody .= "\nTimeline: {$timeline}";
+        if ($budget)   $notifBody .= "\nBudget:   {$budget}";
+        $notifHeaders  = "From: noreply@grytsjesuze.nl\r\n";
+        $notifHeaders .= "Reply-To: {$safeEmail}\r\n";
+        $notifHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        mail($studioEmail, $notifSubject, $notifBody, $notifHeaders);
+
+        // Auto-reply to sender
+        $replySubject = 'Thank you for your message';
+        $replyBody    = "Hi {$name},\n\n"
+                      . "Thank you for reaching out to me and sharing your ideas or project.\n"
+                      . "I've received your inquiry and will take the time to review it carefully. "
+                      . "I aim to respond as soon as possible.\n\n"
+                      . "Warm regards,\n\nGrytsje Suze";
+        $replyHeaders  = "From: GrytsjeSuze@hotmail.com\r\n";
+        $replyHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        mail($safeEmail, $replySubject, $replyBody, $replyHeaders);
+
+        header('Location: thankyou.php');
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
+    <title>Contact — Grytsje Suze</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
 
-    <!-- Navbar wrapper: white top space + black bar -->
-    <div class="relative" style="padding-top: 50px; margin-top: 5px;">
-        <!-- Logo bump: rises UP above the black bar into the white space -->
-        <div style="
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 190px;
-            height: 100px;
-            background-color: #000;
-            border-radius: 95px 95px 0 0;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 2px;
-            z-index: 10;
-        ">
-            <a href="index.php">
-                <img src="./images/groot logo wit.png" alt="GS Grytsje Suze Logo" style="height: 96px; width: auto;">
-            </a>
-        </div>
+<?php include __DIR__ . '/includes/nav.php'; ?>
 
-        <!-- Black bar -->
-        <header class="flex items-center justify-between px-6 md:px-16" style="background-color: #000; height: 75px;">
-            <nav style="font-family: 'Bebas Neue', sans-serif;">
-                <a href="portfolio.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Portfolio</a>
-            </nav>
-            <!-- spacer so text doesn't overlap logo bump -->
-            <div style="width: 160px; flex-shrink: 0;"></div>
-            <nav style="font-family: 'Bebas Neue', sans-serif;">
-                <a href="contact.php" class="text-white text-xl md:text-3xl tracking-widest hover:text-pink-400 transition-colors">Contact Me</a>
-            </nav>
-        </header>
+<main class="flex-1">
+
+    <!-- PAGE HEADING -->
+    <div style="background-color: #ff40b4; padding: 3rem 2rem 2.5rem;">
+        <div class="max-w-7xl mx-auto">
+            <p style="font-family: 'Bebas Neue', sans-serif; color: #000; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 0.5rem;">✦ FEEL FREE TO REACH OUT ✨</p>
+            <h1 style="font-family: 'Bebas Neue', sans-serif; color: #fff; font-size: clamp(3rem, 10vw, 7rem); line-height: 1;">Contact</h1>
+        </div>
     </div>
 
-    <!-- Main -->
-    <main class="flex-1 px-4 md:px-8 py-6 md:py-8">
-
-        <!-- Heading banner -->
-        <div class="mb-4 md:mb-8 flex justify-start items-center max-w-7xl mx-auto">
-            <div class="flex items-center px-3 md:px-6 pt-3 md:pt-6 pb-2 md:pb-3" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em;">
-                <span class="text-white" style="font-size: clamp(1.8rem, 8vw, 4.5rem); line-height: 1;">GET IN TOUCH</span>
-            </div>
+    <!-- INTRO -->
+    <div style="background-color: #fff; padding: 2.5rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div class="max-w-4xl mx-auto">
+            <p style="font-size: 1.05rem; color: #333; line-height: 1.8;">
+                Whether it's a collaboration, an idea, or a question. Feel free to reach out to me and share a few details below.
+            </p>
         </div>
+    </div>
 
-        <!-- Contact section -->
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:items-center">
+    <!-- FORM + PHOTO -->
+    <section style="background-color: #fff; padding: 5rem 2rem;">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
 
-            <!-- Contact form -->
-            <div class="p-5 md:p-8" style="background-color: #000;">
-                <h2 class="text-2xl mb-4 md:mb-6 text-white" style="font-family: 'Bebas Neue', sans-serif;">Send a Message</h2>
-                <form action="" method="POST" class="flex flex-col gap-3 md:gap-4">
+            <!-- Contact Form -->
+            <div style="background-color: #000; padding: 3rem 2.5rem;">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; color: #fff; font-size: 2rem; margin-bottom: 2rem;">Send Inquiry</h2>
+
+                <?php if (!empty($errors)): ?>
+                <div style="background-color: #ff40b4; padding: 1rem 1.5rem; margin-bottom: 2rem;">
+                    <ul style="list-style: none; padding: 0; color: #000; font-size: 0.9rem; line-height: 1.8;">
+                        <?php foreach ($errors as $err): ?>
+                        <li>✦ <?= htmlspecialchars($err) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
+                <form action="contact.php" method="POST" class="flex flex-col gap-5">
+
+                    <!-- 1. Inquiry type -->
                     <div class="flex flex-col gap-1">
-                        <label class="text-sm font-bold text-white">Name</label>
-                        <input type="text" name="name" placeholder="Your name" class="w-full border-2 border-white px-4 py-3 outline-none focus:border-pink-500 text-base" style="background-color: #111; color: #fff;">
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.2em;">I'M REACHING OUT FOR</label>
+                        <select name="inquiry_type" style="background-color: #111; color: #fff; border: 2px solid #fff; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none;" required>
+                            <option value="" disabled <?= empty($_POST['inquiry_type']) ? 'selected' : '' ?>>— Select an option —</option>
+                            <option value="Collaboration (brand / campaign / film)" <?= ($_POST['inquiry_type'] ?? '') === 'Collaboration (brand / campaign / film)' ? 'selected' : '' ?>>Collaboration (brand / campaign / film)</option>
+                            <option value="Commission (custom piece)" <?= ($_POST['inquiry_type'] ?? '') === 'Commission (custom piece)' ? 'selected' : '' ?>>Commission (custom piece)</option>
+                            <option value="Available work inquiry" <?= ($_POST['inquiry_type'] ?? '') === 'Available work inquiry' ? 'selected' : '' ?>>Available work inquiry</option>
+                            <option value="Styling / production use (film, events, shoot)" <?= ($_POST['inquiry_type'] ?? '') === 'Styling / production use (film, events, shoot)' ? 'selected' : '' ?>>Styling / production use (film, events, shoot)</option>
+                            <option value="Workshop / brand experience" <?= ($_POST['inquiry_type'] ?? '') === 'Workshop / brand experience' ? 'selected' : '' ?>>Workshop / brand experience</option>
+                            <option value="Other" <?= ($_POST['inquiry_type'] ?? '') === 'Other' ? 'selected' : '' ?>>Other</option>
+                        </select>
                     </div>
+
+                    <!-- 2. Name -->
                     <div class="flex flex-col gap-1">
-                        <label class="text-sm font-bold text-white">Email</label>
-                        <input type="email" name="email" placeholder="your@email.com" class="w-full border-2 border-white px-4 py-3 outline-none focus:border-pink-500 text-base" style="background-color: #111; color: #fff;">
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.2em;">NAME</label>
+                        <input type="text" name="name" placeholder="Your name"
+                               value="<?= htmlspecialchars($_POST['name'] ?? '') ?>"
+                               style="background-color: #111; color: #fff; border: 2px solid #fff; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none;" required>
                     </div>
+
+                    <!-- 3. Email -->
                     <div class="flex flex-col gap-1">
-                        <label class="text-sm font-bold text-white">Message</label>
-                        <textarea name="message" rows="4" placeholder="Your message..." class="w-full border-2 border-white px-4 py-3 outline-none focus:border-pink-500 resize-none text-base" style="background-color: #111; color: #fff;"></textarea>
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.2em;">EMAIL</label>
+                        <input type="email" name="email" placeholder="your@email.com"
+                               value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                               style="background-color: #111; color: #fff; border: 2px solid #fff; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none;" required>
                     </div>
-                    <button type="submit" class="w-full text-white text-2xl px-8 py-4 transition-all duration-200 shadow-lg" style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;" onmouseover="this.style.backgroundColor='#e0359e'" onmouseout="this.style.backgroundColor='#ff40b4'">SEND MESSAGE</button>
+
+                    <!-- 4. Company / Project (optional) -->
+                    <div class="flex flex-col gap-1">
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #aaa; font-size: 0.8rem; letter-spacing: 0.2em;">COMPANY / PROJECT <span style="color:#555;">(optional)</span></label>
+                        <input type="text" name="company" placeholder="Company or project name"
+                               value="<?= htmlspecialchars($_POST['company'] ?? '') ?>"
+                               style="background-color: #111; color: #fff; border: 2px solid #333; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none;">
+                    </div>
+
+                    <!-- 5. Project description -->
+                    <div class="flex flex-col gap-1">
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.2em;">TELL ME ABOUT YOUR PROJECT</label>
+                        <p style="color: #777; font-size: 0.8rem; margin-bottom: 0.5rem;">Please describe your idea, use case, or request in detail.</p>
+                        <textarea name="project" rows="5" placeholder="Describe your idea, use case or request..."
+                                  style="background-color: #111; color: #fff; border: 2px solid #fff; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none; resize: vertical;" required><?= htmlspecialchars($_POST['project'] ?? '') ?></textarea>
+                    </div>
+
+                    <!-- 6. Timeline (optional) -->
+                    <div class="flex flex-col gap-1">
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #aaa; font-size: 0.8rem; letter-spacing: 0.2em;">TIMELINE <span style="color:#555;">(optional)</span></label>
+                        <select name="timeline" style="background-color: #111; color: #fff; border: 2px solid #333; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none;">
+                            <option value="">— Select timeline —</option>
+                            <option value="ASAP" <?= ($_POST['timeline'] ?? '') === 'ASAP' ? 'selected' : '' ?>>ASAP</option>
+                            <option value="1–3 months" <?= ($_POST['timeline'] ?? '') === '1–3 months' ? 'selected' : '' ?>>1–3 months</option>
+                            <option value="Flexible" <?= ($_POST['timeline'] ?? '') === 'Flexible' ? 'selected' : '' ?>>Flexible</option>
+                        </select>
+                    </div>
+
+                    <!-- 7. Budget range (optional) -->
+                    <div class="flex flex-col gap-1">
+                        <label style="font-family: 'Bebas Neue', sans-serif; color: #aaa; font-size: 0.8rem; letter-spacing: 0.2em;">BUDGET RANGE <span style="color:#555;">(optional)</span></label>
+                        <select name="budget" style="background-color: #111; color: #fff; border: 2px solid #333; padding: 0.75rem 1rem; font-size: 0.95rem; outline: none;">
+                            <option value="">— Select budget —</option>
+                            <option value="Under €2k" <?= ($_POST['budget'] ?? '') === 'Under €2k' ? 'selected' : '' ?>>Under €2k</option>
+                            <option value="€2k–€10k" <?= ($_POST['budget'] ?? '') === '€2k–€10k' ? 'selected' : '' ?>>€2k–€10k</option>
+                            <option value="€10k–€25k" <?= ($_POST['budget'] ?? '') === '€10k–€25k' ? 'selected' : '' ?>>€10k–€25k</option>
+                            <option value="€25k+" <?= ($_POST['budget'] ?? '') === '€25k+' ? 'selected' : '' ?>>€25k+</option>
+                            <option value="Not sure yet" <?= ($_POST['budget'] ?? '') === 'Not sure yet' ? 'selected' : '' ?>>Not sure yet</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="w-full text-white text-2xl px-8 py-4 transition-all duration-200 shadow-lg mt-2"
+                            style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;"
+                            onmouseover="this.style.backgroundColor='#e0359e'"
+                            onmouseout="this.style.backgroundColor='#ff40b4'">SEND INQUIRY →</button>
+
                 </form>
             </div>
 
-            <!-- Contact info -->
-            <div class="flex flex-col gap-5 md:gap-6 justify-center px-5 md:px-8 py-5 md:py-8" style="background-color: #ff40b4;">
-                <div>
-                    <p class="text-2xl md:text-5xl mb-1 md:mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-solid fa-envelope"></i> Email</p>
-                    <p class="text-white text-sm md:text-base">GrytsjeSuze@hotmail.com</p>
+            <!-- Photo placeholder + info -->
+            <div class="flex flex-col gap-6">
+                <!-- Photo -->
+                <div style="overflow: hidden; min-height: 500px;">
+                    <img src="./images/magnum selfieh.jpg" alt="Grytsje Suze" style="width: 100%; height: 100%; object-fit: cover; display: block; min-height: 500px;">
                 </div>
-                <a href="https://www.instagram.com/grytsjesuze/" target="_blank" class="block hover:opacity-80 transition-opacity">
-                    <p class="text-2xl md:text-5xl mb-1 md:mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-brands fa-instagram"></i> Instagram</p>
-                    <p class="text-white text-sm md:text-base hover:underline">@grytsjesuze</p>
-                </a>
-                <div>
-                    <p class="text-2xl md:text-5xl mb-1 md:mb-2 text-white flex items-center gap-3" style="font-family: 'Bebas Neue', sans-serif;"><i class="fa-solid fa-location-dot"></i> Location</p>
-                    <p class="text-white text-sm md:text-base">The Netherlands</p>
-                </div>
+                <!-- Footer note -->
+                <p style="font-size: 0.9rem; color: #555; line-height: 1.8; font-style: italic;">
+                    Each inquiry is reviewed with care, and I'll come back to you as soon as possible.
+                </p>
             </div>
 
         </div>
-    </main>
+    </section>
 
-    <!-- Footer -->
-    <footer class="border-t-4 border-black px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-3">
-        <div><a href="index.php"><img src="./images/GS Grytsje Suze Logo goed-02.png" alt="GS Grytsje Suze Logo 02" class="h-12 w-auto"></a></div>
-        <nav class="hidden md:flex gap-6 text-sm text-gray-700">
-            <a href="#" class="hover:underline">Text</a>
-            <a href="#" class="hover:underline">Text</a>
-            <a href="#" class="hover:underline">Text</a>
-        </nav>
-    </footer>
+</main>
+
+<!-- Floating Reach Out Button -->
+<a href="contact.php"
+   class="fixed bottom-8 right-8 z-50 inline-flex items-center gap-2 text-black text-lg px-6 py-3 shadow-2xl transition-all duration-200"
+   style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; border-radius: 50px;"
+   onmouseover="this.style.backgroundColor='#e0359e'"
+   onmouseout="this.style.backgroundColor='#ff40b4'">✦ Reach Out</a>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
 
 </body>
 </html>
+

@@ -5,8 +5,8 @@ include 'auth.php';
 // 1. Database verbinding (Zorg dat dit overeenkomt met je instellingen)
 $host = 'localhost';
 $db = 'grytsje suze';
-$user = 'bit_academy';
-$pass = 'bit_academy';
+$user = 'bitacademy';
+$pass = 'bitacademy';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
