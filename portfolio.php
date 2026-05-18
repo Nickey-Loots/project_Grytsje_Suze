@@ -1,31 +1,8 @@
 <?php
-
 include './includes/db.php';
+include './admin/functions.php';
 
-// 2. Haal alle tassen op
-$stmt = $pdo->query("SELECT * FROM tassen ORDER BY id DESC");
-$tassen = $stmt->fetchAll();
-
-/**
- * Functie om te bepalen of tekst zwart of wit moet zijn op basis van de achtergrondkleur.
- * Werkt op basis van de YIQ-helderheidsschaal.
- */
-function getContrastColor($hexColor)
-{
-    // Verwijder de # als die er staat
-    $hexColor = str_replace('#', '', $hexColor);
-
-    // Zet hex om naar RGB
-    $r = hexdec(substr($hexColor, 0, 2));
-    $g = hexdec(substr($hexColor, 2, 2));
-    $b = hexdec(substr($hexColor, 4, 2));
-
-    // Bereken de helderheid (YIQ formule)
-    // Een waarde boven de 128 wordt over het algemeen als 'licht' beschouwd
-    $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
-
-    return ($yiq >= 128) ? 'text-black' : 'text-white';
-}
+$tassen = getAllTassen($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="nl">

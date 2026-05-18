@@ -1,15 +1,10 @@
 <?php
-
 include 'auth.php';
 include '../includes/db.php';
-
+include 'functions.php';
 
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Veiligheid: zorg dat we geen owners verwijderen via de URL
-    $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id AND rol != 'owner'");
-    $stmt->execute([':id' => $id]);
+    deleteUser($pdo, (int) $_GET['id']);
 }
 
 header("Location: gebruikers.php");
