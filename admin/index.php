@@ -1,10 +1,8 @@
 <?php
-
 include '../includes/db.php';
+include 'functions.php';
 
-// 2. Haal alle tassen op
-$stmt = $pdo->query("SELECT * FROM tassen ORDER BY created_at DESC");
-$tassen = $stmt->fetchAll();
+$tassen = getAllTassen($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="nl">

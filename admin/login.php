@@ -1,31 +1,23 @@
 <?php
-
 session_start();
 
-// Als de gebruiker al is ingelogd, stuur ze direct door naar het dashboard
 if (isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit;
 }
 
 include '../includes/db.php';
+include 'functions.php';
 
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $user = loginUser($pdo, $_POST['email'], $_POST['password']);
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->execute([':email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && password_verify($password, $user['wachtwoord'])) {
-        // Sessie variabelen instellen
+    if ($user) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_rol'] = $user['rol'];
-
         header("Location: index.php");
         exit;
     } else {

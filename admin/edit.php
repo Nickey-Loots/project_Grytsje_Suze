@@ -1,14 +1,16 @@
 <?php
 include '../includes/db.php';
+include 'functions.php';
 
-$id = $_GET['id'] ?? die("Geen ID");
-$stmt = $pdo->prepare("SELECT * FROM tassen WHERE id = ?");
-$stmt->execute([$id]);
-$tas = $stmt->fetch() ?: die("Niet gevonden");
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$tas = getTasById($pdo, $id);
+if (!$tas)
+    die("Niet gevonden");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fotoPath = $tas['afbeelding'];
     $modelPath = $tas['model_3d'];
+
     if (isset($_FILES['afbeelding']) && $_FILES['afbeelding']['error'] === 0) {
         $n = time() . '_' . $_FILES['afbeelding']['name'];
         move_uploaded_file($_FILES['afbeelding']['tmp_name'], "../uploads/" . $n);
@@ -19,17 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         move_uploaded_file($_FILES['model_3d']['tmp_name'], "../uploads/" . $m);
         $modelPath = "uploads/" . $m;
     }
-    $pdo->prepare("UPDATE tassen SET naam=?, beschrijving=?, afbeelding=?, kleurcode=?, model_3d=?, tekst_kleur=?, titel_kleur=? WHERE id=?")
-        ->execute([
-            $_POST['naam'],
-            $_POST['beschrijving'],
-            $fotoPath,
-            $_POST['kleurcode'],
-            $modelPath,
-            $_POST['tekst_kleur'],
-            $_POST['titel_kleur'],
-            $id
-        ]);
+
+    updateTas(
+        $pdo,
+        $id,
+        $_POST['naam'],
+        $_POST['beschrijving'],
+        $fotoPath,
+        $_POST['kleurcode'],
+        $modelPath,
+        $_POST['tekst_kleur'],
+        $_POST['titel_kleur']
+    );
+
     header("Location: index.php");
     exit;
 }

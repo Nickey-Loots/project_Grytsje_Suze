@@ -1,24 +1,14 @@
 <?php
-
 include '../includes/db.php';
+include 'functions.php';
 
-// 1. Verwerk toevoegen van nieuwe admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_admin'])) {
-    $email = $_POST['email'];
-    // Wachtwoord hashen voor veiligheid!
-    $wachtwoord = password_hash($_POST['wachtwoord'], PASSWORD_DEFAULT);
-    $rol = 'admin';
-
-    $sql = "INSERT INTO users (email, wachtwoord, rol) VALUES (:email, :wachtwoord, :rol)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([':email' => $email, ':wachtwoord' => $wachtwoord, ':rol' => $rol]);
+    createAdmin($pdo, $_POST['email'], $_POST['wachtwoord']);
     header("Location: gebruikers.php");
     exit;
 }
 
-// 2. Haal alle gebruikers op
-$stmt = $pdo->query("SELECT id, email, rol, created_at FROM users ORDER BY rol DESC");
-$users = $stmt->fetchAll();
+$users = getAllUsers($pdo);
 ?>
 
 <!DOCTYPE html>
