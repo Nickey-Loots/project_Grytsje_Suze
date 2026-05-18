@@ -1,22 +1,6 @@
 <?php
 
-include 'auth.php';
-
-// Database verbinding (pas je gegevens aan)
-$host = 'localhost';
-$db = 'grytsje suze';
-$user = 'bitacademy';
-$pass = 'bitacademy';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Database verbinding mislukt: " . $e->getMessage());
-}
+include '../includes/db.php';
 
 // 1. Verwerk toevoegen van nieuwe admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_admin'])) {

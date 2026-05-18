@@ -1,25 +1,7 @@
 <?php
 
 include 'auth.php';
-
-// 1. Database verbinding (Zorg dat dit overeenkomt met je instellingen)
-$host = 'localhost';
-$db = 'grytsje suze';
-$user = 'bitacademy';
-$pass = 'bitacademy';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Database verbinding mislukt: " . $e->getMessage());
-}
+include '../includes/db.php';
 
 // 2. Controleren of er een ID is meegegeven in de URL
 if (isset($_GET['id'])) {

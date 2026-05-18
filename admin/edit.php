@@ -1,10 +1,5 @@
 <?php
-include 'auth.php';
-$host = 'localhost';
-$db = 'grytsje suze';
-$user = 'bitacademy';
-$pass = 'bitacademy';
-$charset = 'utf8mb4';
+include '../includes/db.php';
 
 $id = $_GET['id'] ?? die("Geen ID");
 $stmt = $pdo->prepare("SELECT * FROM tassen WHERE id = ?");

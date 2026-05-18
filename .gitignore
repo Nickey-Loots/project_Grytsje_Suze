@@ -147,3 +147,6 @@ vite.config.ts.timestamp-*
 *.mov
 *.MOV
 *.MP4
+
+# Vendor
+vendor/

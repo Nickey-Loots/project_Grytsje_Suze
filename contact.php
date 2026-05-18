@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($project))      $errors[] = 'Please describe your project or request.';
 
     if (empty($errors)) {
-        $studioEmail = 'GrytsjeSuze@hotmail.com';
+        $studioEmail = 'nickeyloots0161@gmail.com';
         $safeEmail   = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         // Notification email to studio

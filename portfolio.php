@@ -1,23 +1,6 @@
 <?php
-// 1. Database verbinding
-$host = 'localhost';
-$db = 'grytsje suze';
-$user = 'bitacademy';
-$pass = 'bitacademy';
-$charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Database verbinding mislukt: " . $e->getMessage());
-}
+include './includes/db.php';
 
 // 2. Haal alle tassen op
 $stmt = $pdo->query("SELECT * FROM tassen ORDER BY id DESC");
