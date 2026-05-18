@@ -2,15 +2,9 @@
 include 'auth.php';
 $host = 'localhost';
 $db = 'grytsje suze';
-<<<<<<< HEAD
-$user = 'bitacademy';
-$pass = 'bitacademy';
-$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-=======
 $user = 'bitacademy';
 $pass = 'bitacademy';
 $charset = 'utf8mb4';
->>>>>>> webpage
 
 $id = $_GET['id'] ?? die("Geen ID");
 $stmt = $pdo->prepare("SELECT * FROM tassen WHERE id = ?");
