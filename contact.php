@@ -192,6 +192,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p style="font-size: 0.9rem; color: #555; line-height: 1.8; font-style: italic;">
                     Each inquiry is reviewed with care, and I'll come back to you as soon as possible.
                 </p>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/grytsjesuze" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-3 text-black transition-opacity duration-200"
+                   style="text-decoration: none;"
+                   onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                    <!-- Instagram icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                         style="width: 28px; height: 28px; flex-shrink: 0;">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                    </svg>
+                    <span style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.1em;">@grytsjesuze</span>
+                </a>
             </div>
 
         </div>
