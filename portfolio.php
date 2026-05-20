@@ -53,11 +53,30 @@ function getContrastColor($hexColor)
     <title>Work — Grytsje Suze</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
+    <style>
+        /* Hide entire top navbar on mobile for portfolio page (sidebar nav used instead) */
+        @media (max-width: 767px) {
+            body > div.relative { display: none !important; }
+            .portfolio-card { height: 400px; overflow: hidden; }
+            .portfolio-card-text { overflow: hidden; }
+        }
+    </style>
 </head>
 
 <body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
 
+<!-- Mobile Sidebar Nav (portfolio-specific, only visible on small screens) -->
+<div class="md:hidden fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center justify-between py-8" style="background-color: #000;">
+    <a href="portfolio.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Portfolio</a>
+    <a href="index.php">
+        <img src="./images/groot logo wit.png" alt="Logo" class="h-auto" style="width: 180px; transform: rotate(-90deg);">
+    </a>
+    <a href="contact.php" class="text-white text-sm" style="font-family: 'Bebas Neue', sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.12em;">Contact Me</a>
+</div>
+
 <?php include __DIR__ . '/includes/nav.php'; ?>
+
+<div class="pl-20 md:pl-0 flex flex-col flex-1">
 
 <!-- PAGE HEADING -->
 <div style="background-color: #000; padding: 3rem 2rem 2.5rem;">
@@ -75,11 +94,11 @@ function getContrastColor($hexColor)
                 $bgColor = !empty($tas['kleurcode']) ? $tas['kleurcode'] : '#ffffff';
                 $textColorClass = getContrastColor($bgColor);
             ?>
-                <div class="flex <?= $flexClass ?>" style="min-height: 400px;">
+                <div class="portfolio-card flex <?= $flexClass ?>" style="min-height: 400px;">
                     <div class="w-1/2 overflow-hidden bg-gray-100">
                         <img src="./<?= htmlspecialchars($tas['afbeelding']) ?>" alt="<?= htmlspecialchars($tas['naam']) ?>" class="w-full h-full object-cover">
                     </div>
-                    <div class="w-1/2 flex flex-col justify-center p-6 md:p-12 <?= $textColorClass ?>" style="background-color: <?= $bgColor ?>;">
+                    <div class="portfolio-card-text w-1/2 flex flex-col justify-center p-6 md:p-12 <?= $textColorClass ?>" style="background-color: <?= $bgColor ?>;">
                         <h2 class="text-xl md:text-5xl font-bold mb-2 md:mb-4 uppercase" style="font-family: 'Bebas Neue', sans-serif;">
                             <?= htmlspecialchars($tas['naam']) ?>
                         </h2>
@@ -93,6 +112,8 @@ function getContrastColor($hexColor)
             endforeach;
             ?>
         </main>
+
+</div><!-- end mobile-offset wrapper -->
 
 <!-- Floating Reach Out Button -->
 <a href="contact.php"
