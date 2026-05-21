@@ -1,4 +1,7 @@
 <?php
+// Userstory #1: Pagina met overzicht van alle tassen
+// Userstory #2: Foto's zijn klikbaar en leiden door naar de detail page
+// Userstory #10: Pagina is bereikbaar via link in de navbar
 // 1. Database verbinding
 $host = 'localhost';
 $db = 'grytsje suze';
@@ -95,6 +98,8 @@ function getContrastColor($hexColor)
                 $textColorClass = getContrastColor($bgColor);
             ?>
                 <div class="portfolio-card flex <?= $flexClass ?>" style="min-height: 400px;">
+                    <!-- Userstory #1: Afbeelding en beschrijving per tas -->
+                    <!-- Userstory #2: Afbeelding is klikbaar en leidt naar de detail page -->
                     <div class="w-1/2 overflow-hidden bg-gray-100">
                         <img src="./<?= htmlspecialchars($tas['afbeelding']) ?>" alt="<?= htmlspecialchars($tas['naam']) ?>" class="w-full h-full object-cover">
                     </div>

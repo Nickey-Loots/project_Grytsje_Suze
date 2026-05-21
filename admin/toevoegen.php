@@ -1,4 +1,6 @@
-<?php include 'auth.php'; ?>
+<?php
+// Userstory #4: Formulier om een nieuw product toe te voegen (naam, afbeelding, kleuropties, beschrijving)
+include 'auth.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 

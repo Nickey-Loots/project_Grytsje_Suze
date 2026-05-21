@@ -1,4 +1,7 @@
 <?php
+// Userstory #4: Overzichtpagina met alle producten en toevoeg knop
+// Userstory #6: Overzichtpagina met wijzig knop per product
+// Userstory #7: Overzichtpagina met verwijder knop per product
 
 include 'auth.php';
 

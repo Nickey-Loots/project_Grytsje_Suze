@@ -1,9 +1,11 @@
 <footer class="border-t-4 border-black px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <!-- Userstory #12: Logo in footer is klikbaar en stuurt terug naar de homepage -->
     <div>
         <a href="index.php">
             <img src="./images/GS Grytsje Suze Logo goed-02.png" alt="GS Grytsje Suze Logo" class="h-12 w-auto">
         </a>
     </div>
+    <!-- Userstory #9: Instagram link/logo in de footer -->
     <nav class="flex flex-wrap justify-center gap-4 md:gap-6 text-xs tracking-widest text-gray-600" style="font-family: 'Bebas Neue', sans-serif;">
         <a href="about.php" class="hover:text-pink-500 transition-colors">About</a>
         <a href="portfolio.php" class="hover:text-pink-500 transition-colors">Work</a>

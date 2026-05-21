@@ -1,4 +1,5 @@
 <?php
+// Userstory #4: Verwerkt het formulier voor het toevoegen van een nieuw product en slaat het op in de database
 include 'auth.php';
 $host = 'localhost';
 $db = 'grytsje suze';

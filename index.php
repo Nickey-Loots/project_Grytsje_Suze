@@ -53,6 +53,7 @@
         </div>
     </div>
 
+    <!-- Userstory #10: CTA-knop naar het portfolio op de homepage -->
     <!-- See More of My Work -->
     <div class="flex justify-center py-8" style="background-color: #000;">
         <a href="portfolio.php" class="text-white text-2xl px-16 py-4 inline-block transition-all duration-200 shadow-lg"
@@ -127,7 +128,7 @@
         </div>
     </section>
 
-    <!-- CONTACT CTA -->
+    <!-- Userstory #8: Link naar contact pagina via de homepage -->\n    <!-- CONTACT CTA -->
     <section style="background-color: #fff; padding: 5rem 2rem;">
         <div class="max-w-3xl mx-auto">
             <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.85rem; letter-spacing: 0.3em; margin-bottom: 0.5rem;">✦ GET IN TOUCH</p>

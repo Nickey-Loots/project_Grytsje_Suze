@@ -1,4 +1,5 @@
 <?php
+// Userstory #7: Verwijdert een product uit de database en van de server
 
 include 'auth.php';
 

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- Userstory #2: Detail page met meer info over de tas (naam, kleuren, etc.) -->
+<!-- Userstory #11: 3D omgeving wordt getoond op de Product Detail page -->
+<!-- Userstory #9: Instagram link op de detail page -->
 <html lang="en">
 
 <head>

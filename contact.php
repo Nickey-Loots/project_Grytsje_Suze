@@ -1,4 +1,7 @@
 <?php
+// Userstory #5: Contact pagina met gegevens bedrijfseigenaar en contactformulier
+// Userstory #8: Contact pagina bereikbaar via de navbar
+// Userstory #9: Instagram link op de contact pagina
 // Handle form submission
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

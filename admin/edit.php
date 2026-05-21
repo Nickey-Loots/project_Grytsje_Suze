@@ -1,4 +1,5 @@
 <?php
+// Userstory #6: Formulier om een product te bewerken, alle velden vooringevuld
 include 'auth.php';
 $host = 'localhost';
 $db = 'grytsje suze';

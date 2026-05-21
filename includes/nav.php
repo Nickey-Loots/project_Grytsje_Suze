@@ -8,6 +8,7 @@ function navLink(string $href, string $label, string $current): string {
 ?>
 <div class="relative" style="padding-top: 50px; margin-top: 5px;">
 
+    <!-- Userstory #12: Logo is klikbaar en stuurt terug naar de homepage -->
     <!-- Logo bump -->
     <div style="
         position: absolute;
@@ -32,6 +33,8 @@ function navLink(string $href, string $label, string $current): string {
     <!-- Desktop black bar -->
     <header style="background-color: #000; height: 75px; position: relative; z-index: 10;" class="flex items-center justify-between px-4 md:px-10">
 
+        <!-- Userstory #8: Navbar met link naar contact pagina -->
+        <!-- Userstory #10: Navbar bevat link naar portfolio (Work) -->
         <!-- Left nav: About / Work / Collaborations -->
         <nav class="hidden md:flex items-center gap-6 lg:gap-10" style="font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;">
             <?= navLink('about.php', 'About', $currentPage) ?>
