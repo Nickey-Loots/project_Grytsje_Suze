@@ -1,4 +1,39 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Load .env variables
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+    foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) continue;
+        [$key, $value] = explode('=', $line, 2);
+        $_ENV[trim($key)] = trim($value);
+    }
+}
+
+function sendMail(string $toAddress, string $toName, string $subject, string $body): void
+{
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host       = $_ENV['MAIL_HOST'] ?? 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $_ENV['MAIL_USERNAME'] ?? '';
+    $mail->Password   = $_ENV['MAIL_PASSWORD'] ?? '';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = (int)($_ENV['MAIL_PORT'] ?? 587);
+    $mail->CharSet    = 'UTF-8';
+
+    $mail->setFrom($_ENV['MAIL_USERNAME'] ?? '', $_ENV['MAIL_FROM_NAME'] ?? 'Grytsje Suze');
+    $mail->addAddress($toAddress, $toName);
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+    $mail->isHTML(false);
+    $mail->send();
+}
+
 // Handle form submission
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($project))      $errors[] = 'Please describe your project or request.';
 
     if (empty($errors)) {
-        $studioEmail = 'nickeyloots0161@gmail.com';
+        $studioEmail = $_ENV['MAIL_TO'] ?? 'nickeyloots0161@gmail.com';
         $safeEmail   = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         // Notification email to studio
@@ -30,24 +65,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notifBody   .= "\nProject / Request:\n{$project}\n";
         if ($timeline) $notifBody .= "\nTimeline: {$timeline}";
         if ($budget)   $notifBody .= "\nBudget:   {$budget}";
-        $notifHeaders  = "From: noreply@grytsjesuze.nl\r\n";
-        $notifHeaders .= "Reply-To: {$safeEmail}\r\n";
-        $notifHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        mail($studioEmail, $notifSubject, $notifBody, $notifHeaders);
 
-        // Auto-reply to sender
+        // Auto-reply body
         $replySubject = 'Thank you for your message';
         $replyBody    = "Hi {$name},\n\n"
                       . "Thank you for reaching out to me and sharing your ideas or project.\n"
                       . "I've received your inquiry and will take the time to review it carefully. "
                       . "I aim to respond as soon as possible.\n\n"
                       . "Warm regards,\n\nGrytsje Suze";
-        $replyHeaders  = "From: GrytsjeSuze@hotmail.com\r\n";
-        $replyHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        mail($safeEmail, $replySubject, $replyBody, $replyHeaders);
 
-        header('Location: thankyou.php');
-        exit;
+        try {
+            sendMail($studioEmail, 'Grytsje Suze Studio', $notifSubject, $notifBody);
+            sendMail($safeEmail, $name, $replySubject, $replyBody);
+            header('Location: thankyou.php');
+            exit;
+        } catch (Exception $e) {
+            $errors[] = 'Could not send your message. Please try again later.';
+        }
     }
 }
 ?>
