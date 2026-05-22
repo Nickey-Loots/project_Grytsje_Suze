@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\vande\\\\OneDrive\\\\Desktop\\\\bit-academy\\\\project-tassen-Nickey-Keyan\\\\vendor\" | ForEach-Object { $_.Name })",
-      "Bash(composer require *)"
-    ]
-  }
-}
