@@ -142,8 +142,24 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# Large video files
+# Large media files
 *.mp4
 *.mov
 *.MOV
 *.MP4
+*.jpg
+*.JPG
+*.jpeg
+*.JPEG
+*.png
+*.PNG
+*.gif
+*.GIF
+*.webp
+*.WEBP
+*.glb
+*.GLB
+
+# Image and upload directories
+images/
+uploads/
