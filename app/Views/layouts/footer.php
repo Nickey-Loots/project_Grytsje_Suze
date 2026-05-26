@@ -16,6 +16,7 @@
         <a href="/commissions" class="hover:text-pink-500 transition-colors">Commissions</a>
         <a href="/news" class="hover:text-pink-500 transition-colors">News</a>
         <a href="/contact" class="hover:text-pink-500 transition-colors">Contact</a>
+        <a href="https://www.instagram.com/grytsjesuze/" target="_blank" rel="noopener noreferrer" class="hover:text-pink-500 transition-colors">Instagram</a>
     </nav>
 
     <!-- Auteursrechtmelding met dynamisch huidig jaar -->
