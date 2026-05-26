@@ -163,3 +163,6 @@ vite.config.ts.timestamp-*
 # Image and upload directories
 images/
 uploads/
+
+# Vendor
+vendor/
