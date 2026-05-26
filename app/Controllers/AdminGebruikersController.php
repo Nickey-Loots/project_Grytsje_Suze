@@ -1,11 +1,14 @@
 <?php
+// Naamruimte en afhankelijkheden
 namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\User;
 
+// Controller voor het beheren van admin-gebruikers
 class AdminGebruikersController extends Controller
 {
+    // index(): haalt alle gebruikers op en toont het gebruikersoverzicht
     public function index(): void
     {
         $this->requireAuth();
@@ -13,6 +16,7 @@ class AdminGebruikersController extends Controller
         $this->render('admin/gebruikers', ['users' => $users]);
     }
 
+    // store(): maakt een nieuwe gebruiker aan op basis van POST-gegevens
     public function store(): void
     {
         $this->requireAuth();
@@ -20,6 +24,7 @@ class AdminGebruikersController extends Controller
         $this->redirect('/admin/gebruikers');
     }
 
+    // delete(): verwijdert een gebruiker op basis van het opgegeven ID
     public function delete(int $id): void
     {
         $this->requireAuth();

@@ -1,26 +1,33 @@
 <?php
+// Naamruimte en afhankelijkheden
 namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Tas;
 
+// Controller voor de portfoliopagina en de detailweergave van een individuele tas
 class PortfolioController extends Controller
 {
+    // index(): haalt alle tassen op en geeft ze door aan de portfolioweergave
     public function index(): void
     {
         $tassen = Tas::getAll();
         $this->render('portfolio', ['tassen' => $tassen]);
     }
 
+    // show(): laadt een specifieke tas op basis van het ID, bouwt de galerij op en berekent thema-kleuren
     public function show(int $id): void
     {
         $tas = Tas::getById($id);
+
+        // Geef een 404-fout als de tas niet bestaat
         if (!$tas) {
             http_response_code(404);
             echo '<h1>404 - Tas niet gevonden</h1>';
             return;
         }
 
+        // Bouw de galerij op uit de uploads-map
         $imgDir = ROOT_PATH . '/public/uploads/';
         $extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
         $galerij = [];
@@ -34,6 +41,7 @@ class PortfolioController extends Controller
             }
         }
 
+        // Bereken de achtergrondkleur en bepaal via de YIQ-formule of tekst licht of donker moet zijn
         $bgColor = $tas['kleurcode'] ?? '#ffffff';
         $hex = ltrim($bgColor, '#');
         $r   = hexdec(substr($hex, 0, 2));
@@ -43,6 +51,7 @@ class PortfolioController extends Controller
         $isDark     = $yiq < 128;
         $overlayRgb = "$r, $g, $b";
 
+        // Geef alle berekende data door aan de portfolio-show-view
         $this->render('portfolio-show', [
             'tas'        => $tas,
             'galerij'    => $galerij,
