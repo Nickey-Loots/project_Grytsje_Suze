@@ -3,8 +3,10 @@
     "@tailwindcss/cli": "^4.2.4",
     "tailwindcss": "^4.2.4"
   },
-
   "scripts": {
     "watch": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch"
+  },
+  "devDependencies": {
+    "cypress": "^15.15.0"
   }
 }

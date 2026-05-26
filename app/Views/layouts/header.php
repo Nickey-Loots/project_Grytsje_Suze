@@ -4,7 +4,7 @@ $currentPath = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') ?: '
 
 // navLink(): genereert een ankerlink met actief-stijlklasse op basis van de huidige URL
 function navLink(string $href, string $label, string $current): string {
-    $isActive = ($current === $href || (strlen($href) > 1 && str_starts_with($current, $href)));
+    $isActive = ($current === $href || (strlen($href) > 1 && strpos($current, $href) === 0));
     $colorClass = $isActive ? 'text-brand' : 'text-white hover:text-brand';
     return '<a href="' . $href . '" class="tracking-widest transition-colors duration-200 ' . $colorClass . '">' . $label . '</a>';
 }
