@@ -38,6 +38,7 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
 <html lang="nl">
 
 <head>
+    <!-- Paginakop: tekenset, viewport, lettertype, stijlbladen en importmap voor Three.js -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($tas['naam']) ?> - Customizer</title>
@@ -46,6 +47,7 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./BagEdit/styles.css">
 
+    <!-- Importmap: koppelt Three.js modulenamen aan CDN-URLs voor de 3D-viewer -->
     <script type="importmap">
     {
       "imports": {
@@ -56,6 +58,7 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
     }
     </script>
 
+    <!-- CSS-variabelen op basis van de tas-kleurcode voor het customizer-thema -->
     <style>
         body.customizer-page {
             --customizer-bg:
@@ -73,19 +76,18 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
 
 <body class="min-h-screen! flex! flex-col! text-white! customizer-page">
 
-    <?php include __DIR__ . '/includes/nav.php'; ?>
+    <!-- Navigatiebalk: ingeladen via de herbruikbare header-layout -->
+    <?php require ROOT_PATH . '/app/Views/layouts/header.php'; ?>
 
     <main class="flex-1 w-full max-w-400 mx-auto px-4 md:px-8 py-6">
 
-        <!-- Paginaheader -->
+        <!-- Terugknop, tassennaam en beschrijving -->
         <div class="mb-6">
-            <a href="portfolio.php" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest
-                      transition mb-4 no-underline px-4 py-2 rounded"
+            <a href="/portfolio" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition mb-4 no-underline px-4 py-2 rounded"
                 style="background-color: <?= $bgColor ?>; color: <?= $isDark ? '#fff' : '#1c1c1c' ?>;">
                 <i class="fa fa-arrow-left"></i> Back to Work
             </a>
-            <h2 class="text-4xl md:text-6xl font-bold uppercase mb-2 leading-none text-black"
-                style="font-family: 'Bebas Neue', sans-serif;">
+            <h2 class="font-bebas text-4xl md:text-6xl font-bold uppercase mb-2 leading-none text-black">
                 <?= htmlspecialchars($tas['naam']) ?>
             </h2>
             <p class="text-base md:text-lg opacity-70 max-w-3xl leading-relaxed text-black">
@@ -93,7 +95,7 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
             </p>
         </div>
 
-        <!-- Customizer -->
+        <!-- 3D-customizer: interactieve viewer met kleurenpalet (aangedreven door BagEdit) -->
         <div id="customizer-wrapper" class="pl-4 md:pl-8">
             <div id="app">
 
@@ -125,12 +127,12 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
             </div>
         </div>
 
-        <!-- Galerij -->
+        <!-- Productenafbeeldingengalerij: conditioneel weergegeven als galerij-afbeeldingen beschikbaar zijn -->
         <?php if (!empty($galerij)): ?>
             <div class="mt-12 border-t border-gray-800 pt-8">
-                <h3 class="text-2xl font-bold uppercase mb-4" style="font-family: 'Bebas Neue', sans-serif;">Product Details
-                </h3>
+                <h3 class="font-bebas text-2xl font-bold uppercase mb-4">Product Details</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Doorloop de galerij-afbeeldingen en geef ze weer als tegels -->
                     <?php foreach ($galerij as $img): ?>
                         <div class="aspect-square bg-neutral-900 overflow-hidden rounded-lg border border-gray-800">
                             <img src="./<?= htmlspecialchars($img) ?>" class="w-full h-full object-cover">
@@ -142,12 +144,16 @@ $galerij = !empty($tas['galerij']) ? json_decode($tas['galerij'], true) : [];
 
     </main>
 
-    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <!-- Voettekst: ingeladen via de herbruikbare footer-layout -->
+    <?php require ROOT_PATH . '/app/Views/layouts/footer.php'; ?>
 
+    <!-- Pad naar het 3D-model van de tas, doorgegeven aan de BagEdit-applicatie -->
     <script>
         const HUIDIG_3D_MODEL = "./<?= htmlspecialchars($tas['model_3d'] ?? '') ?>";
     </script>
-    <script src="./BagEdit/app.js" type="module"></script>
+
+    <!-- BagEdit-applicatie: laadt de 3D-customizer als ES-module -->
+    <script src="/BagEdit/app.js" type="module"></script>
 
 </body>
 

@@ -1,62 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Paginakop: tekenset, viewport, lettertype en stijlbladen -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News — Grytsje Suze</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="./public/css/output.css" rel="stylesheet">
 </head>
-<body class="flex flex-col min-h-screen" style="font-family: 'Helvetica World', Helvetica, Arial, sans-serif;">
+<body class="flex flex-col min-h-screen">
 
-<?php include __DIR__ . '/includes/nav.php'; ?>
+<!-- Navigatiebalk: ingeladen via de herbruikbare header-layout -->
+<?php require ROOT_PATH . '/app/Views/layouts/header.php'; ?>
 
 <main class="flex-1">
 
-    <!-- PAGE HEADING -->
-    <div style="background-color: #000; padding: 3rem 2rem 2.5rem;">
+    <!-- Paginatitel: grote koptekst met beschrijving op zwarte achtergrond -->
+    <div class="bg-black pt-12 px-8 pb-10">
         <div class="max-w-7xl mx-auto">
-            <h1 style="font-family: 'Bebas Neue', sans-serif; color: #fff; font-size: clamp(3.5rem, 12vw, 9rem); line-height: 1;">News</h1>
-            <p style="color: #aaa; font-size: 1rem; margin-top: 1rem;">Agenda, upcoming &amp; recent expositions, projects, articles and studio updates.</p>
+            <h1 class="font-bebas text-white text-[clamp(3.5rem,12vw,9rem)] leading-none">News</h1>
+            <p class="text-[#aaa] text-base mt-4">Agenda, upcoming &amp; recent expositions, projects, articles and studio updates.</p>
         </div>
     </div>
 
-    <!-- NEWS GRID -->
-    <section style="background-color: #fff; padding: 5rem 2rem;">
+    <!-- Nieuwsoverzicht: raster met artikelen over exposities, projecten en studio-updates -->
+    <section class="bg-white py-20 px-8">
         <div class="max-w-6xl mx-auto">
 
             <!-- Placeholder news items — replace/extend with real content or DB -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                <!-- Item 1 -->
-                <article style="border-top: 4px solid #ff40b4; padding-top: 1.5rem;">
-                    <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.25em; margin-bottom: 0.5rem;">EXPOSITION</p>
-                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: #000; margin-bottom: 0.75rem; line-height: 1.2;">Upcoming: Title to be announced</h3>
-                    <p style="font-size: 0.9rem; color: #777; margin-bottom: 1rem;">Date · Location</p>
-                    <p style="font-size: 0.95rem; color: #333; line-height: 1.7;">
-                        More information to follow. Stay tuned for updates on upcoming expositions and events.
-                    </p>
+                <!-- Artikel: aankomende expositie -->
+                <article class="border-t-4 border-brand pt-6">
+                    <p class="font-bebas text-brand text-[0.8rem] tracking-[0.25em] mb-2">EXPOSITION</p>
+                    <h3 class="font-bebas text-[1.6rem] text-black mb-3 leading-[1.2]">Upcoming: Title to be announced</h3>
+                    <p class="text-[0.9rem] text-[#777] mb-4">Date · Location</p>
+                    <p class="text-[0.95rem] text-[#333] leading-[1.7]">More information to follow. Stay tuned for updates on upcoming expositions and events.</p>
                 </article>
 
-                <!-- Item 2 -->
-                <article style="border-top: 4px solid #ff40b4; padding-top: 1.5rem;">
-                    <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.25em; margin-bottom: 0.5rem;">PROJECT</p>
-                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: #000; margin-bottom: 0.75rem; line-height: 1.2;">Recent Work: Magnum Show</h3>
-                    <p style="font-size: 0.9rem; color: #777; margin-bottom: 1rem;">Film by Fourcreating</p>
-                    <p style="font-size: 0.95rem; color: #333; line-height: 1.7;">
-                        Leather bags and wearable objects created for the Magnum Show — a film production by Fourcreating.
-                    </p>
-                    <a href="portfolio.php" style="display: inline-block; margin-top: 1rem; font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.9rem; letter-spacing: 0.1em;">View in Portfolio →</a>
+                <!-- Artikel: recent project (Magnum Show) -->
+                <article class="border-t-4 border-brand pt-6">
+                    <p class="font-bebas text-brand text-[0.8rem] tracking-[0.25em] mb-2">PROJECT</p>
+                    <h3 class="font-bebas text-[1.6rem] text-black mb-3 leading-[1.2]">Recent Work: Magnum Show</h3>
+                    <p class="text-[0.9rem] text-[#777] mb-4">Film by Fourcreating</p>
+                    <p class="text-[0.95rem] text-[#333] leading-[1.7]">Leather bags and wearable objects created for the Magnum Show — a film production by Fourcreating.</p>
+                    <a href="/portfolio" class="inline-block mt-4 font-bebas text-brand text-[0.9rem] tracking-widest">View in Portfolio →</a>
                 </article>
 
-                <!-- Item 3 -->
-                <article style="border-top: 4px solid #ff40b4; padding-top: 1.5rem;">
-                    <p style="font-family: 'Bebas Neue', sans-serif; color: #ff40b4; font-size: 0.8rem; letter-spacing: 0.25em; margin-bottom: 0.5rem;">STUDIO UPDATE</p>
-                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: #000; margin-bottom: 0.75rem; line-height: 1.2;">New Work in Progress</h3>
-                    <p style="font-size: 0.9rem; color: #777; margin-bottom: 1rem;">Studio, 2025</p>
-                    <p style="font-size: 0.95rem; color: #333; line-height: 1.7;">
-                        New collections and commissioned objects currently in development. More to be shared soon.
-                    </p>
+                <!-- Artikel: studio-update over nieuw werk in ontwikkeling -->
+                <article class="border-t-4 border-brand pt-6">
+                    <p class="font-bebas text-brand text-[0.8rem] tracking-[0.25em] mb-2">STUDIO UPDATE</p>
+                    <h3 class="font-bebas text-[1.6rem] text-black mb-3 leading-[1.2]">New Work in Progress</h3>
+                    <p class="text-[0.9rem] text-[#777] mb-4">Studio, 2025</p>
+                    <p class="text-[0.95rem] text-[#333] leading-[1.7]">New collections and commissioned objects currently in development. More to be shared soon.</p>
                 </article>
 
             </div>
@@ -64,28 +60,23 @@
         </div>
     </section>
 
-    <!-- CONTACT CTA -->
-    <section style="background-color: #000; padding: 4rem 2rem; text-align: center;">
+    <!-- Contact-uitnodiging sectie onderaan de pagina -->
+    <section class="bg-black py-16 px-8 text-center">
         <div class="max-w-3xl mx-auto">
-            <p style="color: #aaa; font-size: 1rem; margin-bottom: 1.5rem;">Want to stay informed or collaborate on a project?</p>
-            <a href="contact.php" class="inline-block text-black text-xl px-10 py-4 transition-all duration-200"
-               style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif;"
-               onmouseover="this.style.backgroundColor='#e0359e'"
-               onmouseout="this.style.backgroundColor='#ff40b4'">Reach Out →</a>
+            <p class="text-[#aaa] text-base mb-6">Want to stay informed or collaborate on a project?</p>
+            <a href="/contact" class="inline-block text-black text-xl px-10 py-4 transition-all duration-200 bg-brand hover:bg-brand-dark font-bebas">Reach Out →</a>
         </div>
     </section>
 
 </main>
 
-<!-- Floating Reach Out Button -->
-<a href="contact.php"
-   class="fixed bottom-8 right-8 z-50 inline-flex items-center gap-2 text-black text-lg px-6 py-3 shadow-2xl transition-all duration-200"
-   style="background-color: #ff40b4; font-family: 'Bebas Neue', sans-serif; border-radius: 50px;"
-   onmouseover="this.style.backgroundColor='#e0359e'"
-   onmouseout="this.style.backgroundColor='#ff40b4'">✦ Reach Out</a>
+<!-- Zwevende contact-knop rechtsonder in beeld -->
+<a href="/contact" class="fixed bottom-8 right-8 z-50 inline-flex items-center gap-2 text-black text-lg px-6 py-3 shadow-2xl transition-all duration-200 bg-brand hover:bg-brand-dark font-bebas rounded-full">✦ Reach Out</a>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<!-- Voettekst: ingeladen via de herbruikbare footer-layout -->
+<?php require ROOT_PATH . '/app/Views/layouts/footer.php'; ?>
 
-<script src="./script.js"></script>
+<!-- JavaScript voor interactieve pagina-elementen -->
+<script src="/js/script.js"></script>
 </body>
 </html>
