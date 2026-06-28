@@ -76,20 +76,6 @@
             </div>
         </div>
 
-        <!-- Productenafbeeldingengalerij: conditioneel weergegeven als galerij-afbeeldingen beschikbaar zijn -->
-        <?php if (!empty($galerij)): ?>
-            <div class="mt-12 border-t border-gray-800 pt-8">
-                <h3 class="font-bebas text-2xl font-bold uppercase mb-4">Product Details</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- Doorloop de galerij-afbeeldingen en geef ze weer als tegels -->
-                    <?php foreach ($galerij as $img): ?>
-                        <div class="aspect-square bg-neutral-900 overflow-hidden rounded-lg border border-gray-800">
-                            <img src="/<?= htmlspecialchars($img) ?>" class="w-full h-full object-cover">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php endif; ?>
 
     </main>
 
